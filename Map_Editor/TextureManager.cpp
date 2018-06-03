@@ -1,16 +1,16 @@
-#include "TextureLoader.h"
+#include "TextureManager.h"
 
-TextureLoader::TextureLoader()
+TextureManager::TextureManager()
 {
 	LoadAllTexturesFromFiles();
 }
 
-sf::Texture& TextureLoader::GetTextureById(const ID texture_id)
+sf::Texture& TextureManager::GetTextureById(const BlockTypes texture_id)
 {
 	return m_textures.at(texture_id-1);
 }
 
-void TextureLoader::LoadAllTexturesFromFiles()
+void TextureManager::LoadAllTexturesFromFiles()
 {
 	LoadOneTexture("grass.png");
 	LoadOneTexture("dirt.png");
@@ -21,7 +21,7 @@ void TextureLoader::LoadAllTexturesFromFiles()
 	LoadOneTexture("dirt_tldr.png");
 }
 
-void TextureLoader::LoadOneTexture(const std::string filepath_to_texture)
+void TextureManager::LoadOneTexture(const std::string& filepath_to_texture)
 {
 	m_textures.resize(m_textures.size() + 1);
 	m_textures.at(m_textures.size() - 1).loadFromFile(filepath_to_texture);

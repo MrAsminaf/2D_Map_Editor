@@ -7,8 +7,8 @@
 class Camera
 {
 public:
-	Camera(sf::RenderWindow& window);
-	void Update(sf::RenderWindow& main_window);
+	Camera(const sf::RenderWindow& window);
+	void UpdateMainWindowView(sf::RenderWindow& main_window);
 	void Move(float delta_time);
 	void ZoomIn();
 	void ZoomOut();
@@ -17,5 +17,5 @@ public:
 
 private:
 	sf::View m_view;
-	const float m_cameraSpeed = 500.0f;
+	const float m_cameraSpeed;
 };

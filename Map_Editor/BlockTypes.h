@@ -1,0 +1,13 @@
+#pragma once
+
+enum BlockTypes
+{
+	ENUM_NONE,
+	ENUM_GRASS,
+	ENUM_DIRT,
+	ENUM_GRASS_ULDR,
+	ENUM_GRASS_DLTR,
+	ENUM_STONE,
+	ENUM_DIRT_DLTR,
+	ENUM_DIRT_TLDR
+};

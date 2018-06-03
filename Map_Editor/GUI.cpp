@@ -1,6 +1,8 @@
 #include "GUI.h"
 
-GUI::GUI(sf::RectangleShape& rs, TextureLoader::ID& current_block, std::vector<std::vector<int>>& tiles)
+GUI::GUI(sf::RectangleShape& rs, BlockTypes& current_block, std::vector<std::vector<int>>& tiles)
+	:
+	m_spacingBetweenWidgets(7.0f)
 {
 	InitPanel(rs, current_block, tiles);
 }
@@ -15,7 +17,7 @@ void GUI::HandleEvents(sf::Event sf_event)
 	desktop.HandleEvent(sf_event);
 }
 
-void GUI::InitPanel(sf::RectangleShape& rs, TextureLoader::ID& current_block, std::vector<std::vector<int>>& tiles)
+void GUI::InitPanel(sf::RectangleShape& rs, BlockTypes& current_block, std::vector<std::vector<int>>& tiles)
 {
 	// init sfg window
 	m_sfgWindow = sfg::Window::Create();
@@ -37,7 +39,6 @@ void GUI::InitPanel(sf::RectangleShape& rs, TextureLoader::ID& current_block, st
 		(*alias.*pam)(tiles);
 	});
 	m_sfgBox->Pack(generateButton);
-	///
 	
 	//box for scrolled window
 	m_scrolledWindowBox = sfg::Box::Create(sfg::Box::Orientation::VERTICAL);
@@ -56,32 +57,27 @@ void GUI::InitPanel(sf::RectangleShape& rs, TextureLoader::ID& current_block, st
 	CreateButtonsForChoosingBlocks(rs, current_block);
 }
 
-void GUI::CreateButtonsForChoosingBlocks(sf::RectangleShape& rs, TextureLoader::ID& current_block)
+void GUI::CreateButtonsForChoosingBlocks(sf::RectangleShape& rs, BlockTypes& current_block)
 {
-	//AddImageToPanel("grass.png");
-	TextureLoader::ID enum_grass = TextureLoader::ENUM_GRASS;
+	BlockTypes enum_grass = BlockTypes::ENUM_GRASS;
 	AddButtonForChosingBlock("grass32.png", rs, current_block, enum_grass);
 
-	//AddImageToPanel("dirt.png");
-	TextureLoader::ID enum_dirt = TextureLoader::ENUM_DIRT;
+	BlockTypes enum_dirt = BlockTypes::ENUM_DIRT;
 	AddButtonForChosingBlock("dirt32.png", rs, current_block, enum_dirt);
 
-	//AddImageToPanel("grass_uldr.png");
-	TextureLoader::ID enum_grass_uldr = TextureLoader::ENUM_GRASS_ULDR;
+	BlockTypes enum_grass_uldr = BlockTypes::ENUM_GRASS_ULDR;
 	AddButtonForChosingBlock("grass_uldr32.png", rs, current_block, enum_grass_uldr);
 
-	//AddImageToPanel("grass_dltr.png");
-	TextureLoader::ID enum_grass_dltr = TextureLoader::ENUM_GRASS_DLTR;
+	BlockTypes enum_grass_dltr = BlockTypes::ENUM_GRASS_DLTR;
 	AddButtonForChosingBlock("grass_dltr32.png", rs, current_block, enum_grass_dltr);
 
-	TextureLoader::ID enum_dirt_dltr = TextureLoader::ENUM_DIRT_DLTR;
+	BlockTypes enum_dirt_dltr = BlockTypes::ENUM_DIRT_DLTR;
 	AddButtonForChosingBlock("dirt_dltr32.png", rs, current_block, enum_dirt_dltr);
 
-	TextureLoader::ID enum_dirt_tldr = TextureLoader::ENUM_DIRT_TLDR;
+	BlockTypes enum_dirt_tldr = BlockTypes::ENUM_DIRT_TLDR;
 	AddButtonForChosingBlock("dirt_tldr32.png", rs, current_block, enum_dirt_tldr);
 
-	//AddImageToPanel("stone.png");
-	TextureLoader::ID enum_stone = TextureLoader::ENUM_STONE;
+	BlockTypes enum_stone = BlockTypes::ENUM_STONE;
 	AddButtonForChosingBlock("stone32.png", rs, current_block, enum_stone);
 }
 
@@ -100,15 +96,9 @@ void GUI::AddImageToPanel(std::string filepath)
 	m_scrolledWindowBox->Pack(sfgImage);
 }
 
-void GUI::AddButtonForChosingBlock(std::string filepath, sf::RectangleShape& rs, TextureLoader::ID& current_block, TextureLoader::ID& block_being_chosen)
+void GUI::AddButtonForChosingBlock(std::string filepath, sf::RectangleShape& rs, BlockTypes& current_block, BlockTypes& block_being_chosen)
 {
 	auto sfgImage = sfg::Image::Create();
-
-	/*sf::Sprite tempSprite;
-	sf::Texture tempTexture;
-	tempTexture.loadFromFile(filepath);
-	tempSprite.setTexture(tempTexture);
-	tempSprite.scale(sf::Vector2f(2, 2));*/
 
 	sf::Image tempImage;
 	tempImage.loadFromFile(filepath);
@@ -125,18 +115,6 @@ void GUI::AddButtonForChosingBlock(std::string filepath, sf::RectangleShape& rs,
 	});
 
 	m_scrolledWindowBox->Pack(sfgImage);
-
-	//auto button = sfg::Button::Create(label);
-	//sf::Texture texture;
-	//texture.loadFromFile(filepath);
-	//button->GetSignal(sfg::Widget::OnLeftClick).Connect([&rs, texture, &current_block, block_being_chosen]
-	//{
-	//	rs.setTexture(&texture);
-	//	rs.setFillColor(sf::Color(255, 255, 255, 100));
-	//	current_block = block_being_chosen;
-	//});
-	//m_scrolledWindowBox->Pack(button);
-	//m_scrolledWindowBox->Pack(sfg::Separator::Create());
 }
 
 void GUI::CreateOpenButton(sfg::Desktop& desktop, std::vector<std::vector<int>>& tilesVector)

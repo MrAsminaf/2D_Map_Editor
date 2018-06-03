@@ -2,7 +2,7 @@
 
 int main(void) 
 {
-	MainWindow main_window(1200, 800);
+	MainWindow main_window;
 	main_window.RunMainLoop();
 
 	return 0;

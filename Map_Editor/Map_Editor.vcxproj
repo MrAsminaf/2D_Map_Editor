@@ -123,23 +123,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Background.cpp" />
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="ExternalMapLoader.cpp" />
+    <ClCompile Include="MapLoader.cpp" />
     <ClCompile Include="GUI.cpp" />
     <ClCompile Include="Interface.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="MapFileGenerator.cpp" />
-    <ClCompile Include="TextureLoader.cpp" />
+    <ClCompile Include="TextureManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Background.h" />
+    <ClInclude Include="BlockTypes.h" />
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="ExternalMapLoader.h" />
+    <ClInclude Include="MapLoader.h" />
     <ClInclude Include="GUI.h" />
     <ClInclude Include="Interface.h" />
     <ClInclude Include="MainWindow.h" />
     <ClInclude Include="MapFileGenerator.h" />
-    <ClInclude Include="TextureLoader.h" />
+    <ClInclude Include="TextureManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

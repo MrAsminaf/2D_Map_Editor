@@ -6,47 +6,52 @@ MapFileGenerator::MapFileGenerator()
 {
 }
 
-void MapFileGenerator::Generate(std::vector< std::vector<int>>& tiles_info)
+void MapFileGenerator::Generate(std::vector< std::vector<int>>& tiles)
 {
-	std::cout << "Invoked Generate method" << std::endl; // debug info
-	std::cout << tiles_info.size() << std::endl; //debug info
+	using std::cout;
+	using std::endl;
+	using std::cerr;
+	using std::ofstream;
 
-	std::ofstream outputToMapTxtFile;
-	outputToMapTxtFile.open(m_fileName);
+	cout << "Invoked Generate method" << endl; // debug info
+	cout << tiles.size() << endl; //debug info
 
-	if (!outputToMapTxtFile.is_open())
-		std::cout << "Could not open " << m_fileName << " file to generate map" << std::endl;
+	ofstream outputFile;
+	outputFile.open(m_fileName);
+
+	if (!outputFile.is_open())
+		cerr << "Could not open " << m_fileName << " file to generate map" << endl;
 
 	std::string outputLine;
-	for (int y_coord = 0; y_coord < 200; ++y_coord)
+	for (int y = 0; y < 120; ++y)
 	{
 		outputLine.clear();
-		for (int x_coord = 0; x_coord < 400; ++x_coord)
+		for (int x = 0; x < 400; ++x)
 		{
-			if (CheckIfAnyTilePositionMatchesGivenCoords(x_coord, y_coord, tiles_info))
+			if (CheckIfAnyTilePositionMatchesGivenCoords(x, y, tiles))
 			{
-				switch (GetTileAtGivenCoords(x_coord, y_coord, tiles_info)[2])
+				switch (GetTileAtGivenCoords(x, y, tiles)[2])
 				{
-				case TextureLoader::ENUM_GRASS:
-					outputLine.append("1");
+				case BlockTypes::ENUM_GRASS:
+					outputLine += "1";
 					break;
-				case TextureLoader::ENUM_DIRT:
-					outputLine.append("2");
+				case BlockTypes::ENUM_DIRT:
+					outputLine += "2";
 					break;
-				case TextureLoader::ENUM_GRASS_ULDR:
-					outputLine.append("3");
+				case BlockTypes::ENUM_GRASS_ULDR:
+					outputLine += "3";
 					break;
-				case TextureLoader::ENUM_GRASS_DLTR:
-					outputLine.append("4");
+				case BlockTypes::ENUM_GRASS_DLTR:
+					outputLine += "4";
 					break;
-				case TextureLoader::ENUM_STONE:
-					outputLine.append("5");
+				case BlockTypes::ENUM_STONE:
+					outputLine += "5";
 					break;
-				case TextureLoader::ENUM_DIRT_DLTR:
-					outputLine.append("6");
+				case BlockTypes::ENUM_DIRT_DLTR:
+					outputLine += "6";
 					break;
-				case TextureLoader::ENUM_DIRT_TLDR:
-					outputLine.append("7");
+				case BlockTypes::ENUM_DIRT_TLDR:
+					outputLine += "7";
 					break;
 				default:
 					break;
@@ -55,23 +60,23 @@ void MapFileGenerator::Generate(std::vector< std::vector<int>>& tiles_info)
 			else
 				outputLine.append(" ");
 		}
-		outputToMapTxtFile << outputLine << std::endl;
+		outputFile << outputLine << endl;
 	}
-	outputToMapTxtFile.close();
-	std::cout << "Done generating text file" << std::endl;
+	outputFile.close();
+	cout << "Done generating text file" << endl;
 }
 
-bool MapFileGenerator::CheckIfAnyTilePositionMatchesGivenCoords(int x_coord, int y_coord, std::vector<std::vector<int>>& tiles_info)
+bool MapFileGenerator::CheckIfAnyTilePositionMatchesGivenCoords(int x, int y, std::vector <std::vector<int> >& tiles_info) const
 {
 	for (auto &it : tiles_info)
 	{
-		if (it[0] == x_coord && it[1] == y_coord)
+		if (it[0] == x && it[1] == y)
 			return true;
 	}
 	return false;
 }
 
-std::vector<int> MapFileGenerator::GetTileAtGivenCoords(int x, int y, std::vector<std::vector<int>>& tiles_info)
+std::vector<int> MapFileGenerator::GetTileAtGivenCoords(int x, int y, std::vector<std::vector<int>>& tiles_info) const
 {
 	for (auto &it : tiles_info)
 	{

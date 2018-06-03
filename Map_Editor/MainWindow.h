@@ -5,10 +5,13 @@
 
 #include "Interface.h"
 #include "Camera.h"
+#include "Background.h"
+#include "GUI.h"
 
 class MainWindow
 {
 public:
+	MainWindow();
 	MainWindow(int , int);
 	void RunMainLoop();
 	void Input(float delta_time);
@@ -19,7 +22,7 @@ private:
 	void HandleWindowEvents();
 	void IfUserClickedTile();
 	bool IfUserAddsTile();
-	bool IfUserDeletsTile();
+	bool IfUserDeletsTile() const;
 
 private:
 	sf::RenderWindow m_mainWindow;
@@ -28,4 +31,6 @@ private:
 	sf::Clock m_deltaTimer;
 	Interface m_interface;
 	Camera m_camera;
+	Background m_background;
+	GUI m_gui;
 };

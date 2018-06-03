@@ -5,7 +5,7 @@
 #include <vector>
 #include <string>
 
-#include "TextureLoader.h"
+#include "TextureManager.h"
 
 class MapFileGenerator
 {
@@ -14,8 +14,8 @@ public:
 	void Generate(std::vector<std::vector<int>>&);
 
 private:
-	bool CheckIfAnyTilePositionMatchesGivenCoords(int x_coord, int y_coord, std::vector<std::vector<int>>&);
-	std::vector<int> GetTileAtGivenCoords(int x, int y, std::vector<std::vector<int>>&);
+	bool CheckIfAnyTilePositionMatchesGivenCoords(int, int, std::vector<std::vector<int>>&)const;
+	std::vector<int> GetTileAtGivenCoords(int x, int y, std::vector<std::vector<int>>&)const;
 
 private:
 	std::string m_fileName;

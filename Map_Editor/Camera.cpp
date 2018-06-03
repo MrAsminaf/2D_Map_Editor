@@ -1,12 +1,14 @@
 #include "Camera.h"
 
-Camera::Camera(sf::RenderWindow& window)
+Camera::Camera(const sf::RenderWindow& window)
+	:
+	m_cameraSpeed(500.0f)
 {
 	m_view.setSize(sf::Vector2f(window.getSize()));
 	m_view.setCenter(400, 300);
 }
 
-void Camera::Update(sf::RenderWindow& main_window)
+void Camera::UpdateMainWindowView(sf::RenderWindow& main_window)
 {
 	main_window.setView(m_view);
 }
