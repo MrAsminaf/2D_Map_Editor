@@ -60,25 +60,28 @@ void GUI::InitPanel(sf::RectangleShape& rs, BlockTypes& current_block, std::vect
 void GUI::CreateButtonsForChoosingBlocks(sf::RectangleShape& rs, BlockTypes& current_block)
 {
 	BlockTypes enum_grass = BlockTypes::ENUM_GRASS;
-	AddButtonForChosingBlock("grass32.png", rs, current_block, enum_grass);
+	AddButtonForChosingBlock("grass.png", rs, current_block, enum_grass);
 
 	BlockTypes enum_dirt = BlockTypes::ENUM_DIRT;
-	AddButtonForChosingBlock("dirt32.png", rs, current_block, enum_dirt);
+	AddButtonForChosingBlock("dirt.png", rs, current_block, enum_dirt);
 
 	BlockTypes enum_grass_uldr = BlockTypes::ENUM_GRASS_ULDR;
-	AddButtonForChosingBlock("grass_uldr32.png", rs, current_block, enum_grass_uldr);
+	AddButtonForChosingBlock("grass_uldr.png", rs, current_block, enum_grass_uldr);
 
 	BlockTypes enum_grass_dltr = BlockTypes::ENUM_GRASS_DLTR;
-	AddButtonForChosingBlock("grass_dltr32.png", rs, current_block, enum_grass_dltr);
+	AddButtonForChosingBlock("grass_dltr.png", rs, current_block, enum_grass_dltr);
 
 	BlockTypes enum_dirt_dltr = BlockTypes::ENUM_DIRT_DLTR;
-	AddButtonForChosingBlock("dirt_dltr32.png", rs, current_block, enum_dirt_dltr);
+	AddButtonForChosingBlock("dirt_dltr.png", rs, current_block, enum_dirt_dltr);
 
 	BlockTypes enum_dirt_tldr = BlockTypes::ENUM_DIRT_TLDR;
-	AddButtonForChosingBlock("dirt_tldr32.png", rs, current_block, enum_dirt_tldr);
+	AddButtonForChosingBlock("dirt_tldr.png", rs, current_block, enum_dirt_tldr);
 
 	BlockTypes enum_stone = BlockTypes::ENUM_STONE;
-	AddButtonForChosingBlock("stone32.png", rs, current_block, enum_stone);
+	AddButtonForChosingBlock("stone.png", rs, current_block, enum_stone);
+
+	BlockTypes enum_terrain_platform_left = BlockTypes::ENUM_TERRAIN_PLATFORM_LEFT;
+	AddButtonForChosingBlock("terrain_platform_left.png", rs, current_block, enum_terrain_platform_left);
 }
 
 void GUI::AddImageToPanel(std::string filepath)
@@ -105,7 +108,7 @@ void GUI::AddButtonForChosingBlock(std::string filepath, sf::RectangleShape& rs,
 	sf::Texture texture;
 	texture.loadFromFile(filepath);
 	sfgImage->SetImage(tempImage);
-	sfgImage->SetRequisition(sf::Vector2f(15, 40));
+	sfgImage->SetRequisition(sf::Vector2f(15, 20));
 
 	sfgImage->GetSignal(sfg::Widget::OnLeftClick).Connect([&rs, texture, &current_block, block_being_chosen]
 	{

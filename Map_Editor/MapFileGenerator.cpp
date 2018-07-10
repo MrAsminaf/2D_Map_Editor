@@ -2,7 +2,7 @@
 
 MapFileGenerator::MapFileGenerator()
 	:
-	m_fileName("map.txt")
+	m_fileName("platformer.txt")
 {
 }
 
@@ -53,6 +53,8 @@ void MapFileGenerator::Generate(std::vector< std::vector<int>>& tiles)
 				case BlockTypes::ENUM_DIRT_TLDR:
 					outputLine += "7";
 					break;
+				case BlockTypes::ENUM_TERRAIN_PLATFORM_LEFT:
+					outputLine += "8";
 				default:
 					break;
 				}

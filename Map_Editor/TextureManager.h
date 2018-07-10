@@ -8,7 +8,7 @@ class TextureManager
 {
 public:
 	TextureManager();
-	sf::Texture& GetTextureById(const BlockTypes texture_id);
+	sf::Texture& GetTextureById(const int texture_id);
 
 private:
 	void LoadAllTexturesFromFiles();

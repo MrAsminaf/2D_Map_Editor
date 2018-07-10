@@ -5,7 +5,7 @@ TextureManager::TextureManager()
 	LoadAllTexturesFromFiles();
 }
 
-sf::Texture& TextureManager::GetTextureById(const BlockTypes texture_id)
+sf::Texture& TextureManager::GetTextureById(const int texture_id)
 {
 	return m_textures.at(texture_id-1);
 }
@@ -19,6 +19,7 @@ void TextureManager::LoadAllTexturesFromFiles()
 	LoadOneTexture("stone.png");
 	LoadOneTexture("dirt_dltr.png");
 	LoadOneTexture("dirt_tldr.png");
+	LoadOneTexture("terrain_platform_left.png");
 }
 
 void TextureManager::LoadOneTexture(const std::string& filepath_to_texture)

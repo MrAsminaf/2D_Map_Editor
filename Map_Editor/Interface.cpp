@@ -78,47 +78,15 @@ void Interface::HighlightTile()
 
 void Interface::DrawAllTiles()
 {
-	const int tile_x_coord = 0;
-	const int tile_y_coord = 1;
-	const int tile_texture_id = 2;
+	const int x = 0;
+	const int y = 1;
+	const int id = 2;
+	const int tileSize = 16;
 
-	for (auto& it : m_tilesInfoContainer)
+	for (auto& tile : m_tilesInfoContainer)
 	{
-		m_spriteForDrawing.setPosition(float(it[tile_x_coord] * 16), float(it[tile_y_coord] * 16));
-
-		switch (it[tile_texture_id])
-		{
-		case BlockTypes::ENUM_GRASS:
-			m_spriteForDrawing.setTexture(m_textures.GetTextureById(BlockTypes::ENUM_GRASS));
-			break;
-
-		case BlockTypes::ENUM_DIRT:
-			m_spriteForDrawing.setTexture(m_textures.GetTextureById(BlockTypes::ENUM_DIRT));
-			break;
-
-		case BlockTypes::ENUM_GRASS_ULDR:
-			m_spriteForDrawing.setTexture(m_textures.GetTextureById(BlockTypes::ENUM_GRASS_ULDR));
-			break;
-
-		case BlockTypes::ENUM_GRASS_DLTR:
-			m_spriteForDrawing.setTexture(m_textures.GetTextureById(BlockTypes::ENUM_GRASS_DLTR));
-			break;
-
-		case BlockTypes::ENUM_STONE:
-			m_spriteForDrawing.setTexture(m_textures.GetTextureById(BlockTypes::ENUM_STONE));
-			break;
-
-		case BlockTypes::ENUM_DIRT_DLTR:
-			m_spriteForDrawing.setTexture(m_textures.GetTextureById(BlockTypes::ENUM_DIRT_DLTR));
-			break;
-
-		case BlockTypes::ENUM_DIRT_TLDR:
-			m_spriteForDrawing.setTexture(m_textures.GetTextureById(BlockTypes::ENUM_DIRT_TLDR));
-			break;
-
-		default:
-			break;
-		}
+		m_spriteForDrawing.setPosition(float(tile[x] * tileSize), float(tile[y] * tileSize));
+		m_spriteForDrawing.setTexture(m_textures.GetTextureById(tile[id]));
 		m_ptrMainWindow->draw(m_spriteForDrawing);
 	}
 }
