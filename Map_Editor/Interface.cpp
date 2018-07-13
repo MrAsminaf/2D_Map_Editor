@@ -1,12 +1,14 @@
 #include "Interface.h"
 
+BlockTypes Interface::m_currentBlock = BlockTypes::ENUM_NONE;
+sf::RectangleShape Interface::m_mouseHighlight;
+std::vector< std::vector<int> >Interface::m_tilesInfoContainer;
+
 Interface::Interface(sf::RenderWindow& main_window)
 	:
-	m_ptrMainWindow(&main_window),
-	m_currentBlock(BlockTypes::ENUM_NONE)
+	m_ptrMainWindow(&main_window)
 {
-	m_mouseHighlight.setFillColor(sf::Color(60, 60, 60, 150));
-	m_mouseHighlight.setSize(sf::Vector2f(16, 16));
+	InitMouseHighlight();
 }
 
 void Interface::Draw()
@@ -108,6 +110,12 @@ std::vector<int> Interface::GetTileAtGivenCoords(int x, int y) const
 		if (it[0] == x && it[1] == y)
 			return it;
 	}
+}
+
+void Interface::InitMouseHighlight()
+{
+	m_mouseHighlight.setFillColor(sf::Color(60, 60, 60, 150));
+	m_mouseHighlight.setSize(sf::Vector2f(16, 16));
 }
 
 BlockTypes& Interface::GetCurrentBlock()

@@ -6,7 +6,7 @@ MapFileGenerator::MapFileGenerator()
 {
 }
 
-void MapFileGenerator::Generate(std::vector< std::vector<int>>& tiles)
+void MapFileGenerator::Generate()
 {
 	using std::cout;
 	using std::endl;
@@ -14,7 +14,7 @@ void MapFileGenerator::Generate(std::vector< std::vector<int>>& tiles)
 	using std::ofstream;
 
 	cout << "Invoked Generate method" << endl; // debug info
-	cout << tiles.size() << endl; //debug info
+	cout << Interface::GetTilesContainer().size() << endl; //debug info
 
 	ofstream outputFile;
 	outputFile.open(m_fileName);
@@ -28,36 +28,9 @@ void MapFileGenerator::Generate(std::vector< std::vector<int>>& tiles)
 		outputLine.clear();
 		for (int x = 0; x < 400; ++x)
 		{
-			if (CheckIfAnyTilePositionMatchesGivenCoords(x, y, tiles))
+			if (CheckIfAnyTilePositionMatchesGivenCoords(x, y))
 			{
-				switch (GetTileAtGivenCoords(x, y, tiles)[2])
-				{
-				case BlockTypes::ENUM_GRASS:
-					outputLine += "1";
-					break;
-				case BlockTypes::ENUM_DIRT:
-					outputLine += "2";
-					break;
-				case BlockTypes::ENUM_GRASS_ULDR:
-					outputLine += "3";
-					break;
-				case BlockTypes::ENUM_GRASS_DLTR:
-					outputLine += "4";
-					break;
-				case BlockTypes::ENUM_STONE:
-					outputLine += "5";
-					break;
-				case BlockTypes::ENUM_DIRT_DLTR:
-					outputLine += "6";
-					break;
-				case BlockTypes::ENUM_DIRT_TLDR:
-					outputLine += "7";
-					break;
-				case BlockTypes::ENUM_TERRAIN_PLATFORM_LEFT:
-					outputLine += "8";
-				default:
-					break;
-				}
+				outputLine += std::to_string(GetTileAtGivenCoords(x, y)[2]);
 			}
 			else
 				outputLine.append(" ");
@@ -68,9 +41,9 @@ void MapFileGenerator::Generate(std::vector< std::vector<int>>& tiles)
 	cout << "Done generating text file" << endl;
 }
 
-bool MapFileGenerator::CheckIfAnyTilePositionMatchesGivenCoords(int x, int y, std::vector <std::vector<int> >& tiles_info) const
+bool MapFileGenerator::CheckIfAnyTilePositionMatchesGivenCoords(int x, int y) const
 {
-	for (auto &it : tiles_info)
+	for (auto &it : Interface::GetTilesContainer())
 	{
 		if (it[0] == x && it[1] == y)
 			return true;
@@ -78,9 +51,9 @@ bool MapFileGenerator::CheckIfAnyTilePositionMatchesGivenCoords(int x, int y, st
 	return false;
 }
 
-std::vector<int> MapFileGenerator::GetTileAtGivenCoords(int x, int y, std::vector<std::vector<int>>& tiles_info) const
+std::vector<int> MapFileGenerator::GetTileAtGivenCoords(int x, int y) const
 {
-	for (auto &it : tiles_info)
+	for (auto &it : Interface::GetTilesContainer())
 	{
 		if (it[0] == x && it[1] == y)
 			return it;

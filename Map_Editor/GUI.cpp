@@ -1,10 +1,12 @@
 #include "GUI.h"
 
-GUI::GUI(sf::RectangleShape& rs, BlockTypes& current_block, std::vector<std::vector<int>>& tiles)
+sfg::Box::Ptr GUI::m_scrolledWindowBox;
+
+GUI::GUI()
 	:
 	m_spacingBetweenWidgets(7.0f)
 {
-	InitPanel(rs, current_block, tiles);
+	InitPanel();
 }
 
 void GUI::Update()
@@ -17,26 +19,25 @@ void GUI::HandleEvents(sf::Event sf_event)
 	desktop.HandleEvent(sf_event);
 }
 
-void GUI::InitPanel(sf::RectangleShape& rs, BlockTypes& current_block, std::vector<std::vector<int>>& tiles)
+void GUI::InitPanel()
 {
 	// init sfg window
 	m_sfgWindow = sfg::Window::Create();
-	m_sfgWindow->SetTitle("Blocks");
 	m_sfgWindow->SetStyle(sfg::Window::BACKGROUND);
 
 	// create our box
 	m_sfgBox = sfg::Box::Create(sfg::Box::Orientation::VERTICAL);
 	m_sfgBox->SetSpacing(m_spacingBetweenWidgets);
 
-	CreateOpenButton(desktop, tiles);
+	CreateOpenButton();
 
 	// make method from that 
 	auto generateButton = sfg::Button::Create("Generate");
-	void(MapFileGenerator::*pam)(std::vector<std::vector<int>>&) = &MapFileGenerator::Generate;
+	void(MapFileGenerator::*pam)() = &MapFileGenerator::Generate;
 	MapFileGenerator* alias = &m_generator;
-	generateButton->GetSignal(sfg::Widget::OnLeftClick).Connect([pam, alias, &tiles]
+	generateButton->GetSignal(sfg::Widget::OnLeftClick).Connect([pam, alias]
 	{
-		(*alias.*pam)(tiles);
+		(*alias.*pam)();
 	});
 	m_sfgBox->Pack(generateButton);
 	
@@ -54,52 +55,37 @@ void GUI::InitPanel(sf::RectangleShape& rs, BlockTypes& current_block, std::vect
 	m_sfgWindow->Add(m_sfgBox);
 	desktop.Add(m_sfgWindow);
 
-	CreateButtonsForChoosingBlocks(rs, current_block);
+	CreateButtonsForChoosingBlocks();
 }
 
-void GUI::CreateButtonsForChoosingBlocks(sf::RectangleShape& rs, BlockTypes& current_block)
+void GUI::CreateButtonsForChoosingBlocks()
 {
 	BlockTypes enum_grass = BlockTypes::ENUM_GRASS;
-	AddButtonForChosingBlock("grass.png", rs, current_block, enum_grass);
+	AddButtonForChosingBlock("grass.png", enum_grass);
 
 	BlockTypes enum_dirt = BlockTypes::ENUM_DIRT;
-	AddButtonForChosingBlock("dirt.png", rs, current_block, enum_dirt);
+	AddButtonForChosingBlock("dirt.png", enum_dirt);
 
 	BlockTypes enum_grass_uldr = BlockTypes::ENUM_GRASS_ULDR;
-	AddButtonForChosingBlock("grass_uldr.png", rs, current_block, enum_grass_uldr);
+	AddButtonForChosingBlock("grass_uldr.png", enum_grass_uldr);
 
 	BlockTypes enum_grass_dltr = BlockTypes::ENUM_GRASS_DLTR;
-	AddButtonForChosingBlock("grass_dltr.png", rs, current_block, enum_grass_dltr);
+	AddButtonForChosingBlock("grass_dltr.png", enum_grass_dltr);
 
 	BlockTypes enum_dirt_dltr = BlockTypes::ENUM_DIRT_DLTR;
-	AddButtonForChosingBlock("dirt_dltr.png", rs, current_block, enum_dirt_dltr);
+	AddButtonForChosingBlock("dirt_dltr.png", enum_dirt_dltr);
 
 	BlockTypes enum_dirt_tldr = BlockTypes::ENUM_DIRT_TLDR;
-	AddButtonForChosingBlock("dirt_tldr.png", rs, current_block, enum_dirt_tldr);
+	AddButtonForChosingBlock("dirt_tldr.png", enum_dirt_tldr);
 
 	BlockTypes enum_stone = BlockTypes::ENUM_STONE;
-	AddButtonForChosingBlock("stone.png", rs, current_block, enum_stone);
+	AddButtonForChosingBlock("stone.png", enum_stone);
 
 	BlockTypes enum_terrain_platform_left = BlockTypes::ENUM_TERRAIN_PLATFORM_LEFT;
-	AddButtonForChosingBlock("terrain_platform_left.png", rs, current_block, enum_terrain_platform_left);
+	AddButtonForChosingBlock("terrain_platform_left.png", enum_terrain_platform_left);
 }
 
-void GUI::AddImageToPanel(std::string filepath)
-{
-	auto sfgImage = sfg::Image::Create();
-	sf::Image tempImage;
-	tempImage.loadFromFile(filepath);
-	sfgImage->SetImage(tempImage);
-
-	sfgImage->GetSignal(sfg::Widget::OnLeftClick).Connect([]
-	{
-		std::cout << "Kek\n";
-	});
-
-	m_scrolledWindowBox->Pack(sfgImage);
-}
-
-void GUI::AddButtonForChosingBlock(std::string filepath, sf::RectangleShape& rs, BlockTypes& current_block, BlockTypes& block_being_chosen)
+void GUI::AddButtonForChosingBlock(const std::string& filepath, const BlockTypes& block_being_chosen)
 {
 	auto sfgImage = sfg::Image::Create();
 
@@ -110,23 +96,24 @@ void GUI::AddButtonForChosingBlock(std::string filepath, sf::RectangleShape& rs,
 	sfgImage->SetImage(tempImage);
 	sfgImage->SetRequisition(sf::Vector2f(15, 20));
 
-	sfgImage->GetSignal(sfg::Widget::OnLeftClick).Connect([&rs, texture, &current_block, block_being_chosen]
+	sfgImage->GetSignal(sfg::Widget::OnLeftClick).Connect([texture, block_being_chosen]
 	{
-		rs.setTexture(&texture);
-		rs.setFillColor(sf::Color(255, 255, 255, 100));
-		current_block = block_being_chosen;
+		Interface::GetMouseHighlight().setTexture(&texture);
+		Interface::GetMouseHighlight().setFillColor(sf::Color(255, 255, 255, 100));
+		Interface::GetCurrentBlock() = block_being_chosen;
 	});
 
 	m_scrolledWindowBox->Pack(sfgImage);
 }
 
-void GUI::CreateOpenButton(sfg::Desktop& desktop, std::vector<std::vector<int>>& tilesVector)
+void GUI::CreateOpenButton()
 {
 	auto openButton = sfg::Button::Create("Open");
 	m_sfgBox->Pack(openButton);
 
 	ExternalMapLoader& mapLoaderAlias = m_mapFromFileLoader;
-	openButton->GetSignal(sfg::Widget::OnLeftClick).Connect([&desktop, &mapLoaderAlias, &tilesVector] {
+	sfg::Desktop& desktop_alias = desktop;
+	openButton->GetSignal(sfg::Widget::OnLeftClick).Connect([&desktop_alias, &mapLoaderAlias] {
 
 		auto window = sfg::Window::Create();
 		window->SetTitle("Open File");
@@ -151,28 +138,28 @@ void GUI::CreateOpenButton(sfg::Desktop& desktop, std::vector<std::vector<int>>&
 		box->Pack(confirmButton);
 
 		window->Add(box);
-		desktop.Add(window);
+		desktop_alias.Add(window);
 
 
 	//	// Signals.
-		destroy_button->GetSignal(sfg::Widget::OnLeftClick).Connect([&desktop] {
+		destroy_button->GetSignal(sfg::Widget::OnLeftClick).Connect([&desktop_alias] {
 			// Obtain parent window.
 			auto widget = sfg::Context::Get().GetActiveWidget();
 
 			while (widget->GetName() != "Window") {
 				widget = widget->GetParent();
 			}
-			desktop.Remove(widget);
+			desktop_alias.Remove(widget);
 		});
 
-		confirmButton->GetSignal(sfg::Widget::OnLeftClick).Connect([&desktop, &mapLoaderAlias, &tilesVector, entry] {
-			mapLoaderAlias.LoadMapFromFile(entry->GetText(), tilesVector);
+		confirmButton->GetSignal(sfg::Widget::OnLeftClick).Connect([&desktop_alias, &mapLoaderAlias, entry] {
+			mapLoaderAlias.LoadMapFromFile(entry->GetText(), Interface::GetTilesContainer());
 			auto widget = sfg::Context::Get().GetActiveWidget();
 
 			while (widget->GetName() != "Window") {
 				widget = widget->GetParent();
 			}
-			desktop.Remove(widget);
+			desktop_alias.Remove(widget);
 		});
 	});
 }

@@ -13,7 +13,7 @@ MainWindow::MainWindow(int window_width, int window_height)
 	m_interface(m_mainWindow),
 	m_camera(m_mainWindow),
 	m_background(m_mainWindow),
-	m_gui(m_interface.GetMouseHighlight(), m_interface.GetCurrentBlock(), m_interface.GetTilesContainer())
+	m_gui()
 {
 	m_mainWindow.resetGLStates();
 }

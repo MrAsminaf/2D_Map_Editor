@@ -7,7 +7,7 @@ TextureManager::TextureManager()
 
 sf::Texture& TextureManager::GetTextureById(const int texture_id)
 {
-	return m_textures.at(texture_id-1);
+	return m_textures.at(texture_id - 1).texture;
 }
 
 void TextureManager::LoadAllTexturesFromFiles()
@@ -24,6 +24,11 @@ void TextureManager::LoadAllTexturesFromFiles()
 
 void TextureManager::LoadOneTexture(const std::string& filepath_to_texture)
 {
-	m_textures.resize(m_textures.size() + 1);
-	m_textures.at(m_textures.size() - 1).loadFromFile(filepath_to_texture);
+	sf::Texture tempTexture;
+	tempTexture.loadFromFile(filepath_to_texture);
+	
+	TexturesInfo t{ tempTexture, filepath_to_texture };
+	m_textures.push_back(t);
+
+	//GUI::AddButtonForChosingBlock(filepath_to_texture, )
 }

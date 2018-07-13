@@ -19,22 +19,22 @@ public:
 	void AddTile();
 	void DeleteTile();
 
-	//Getters
-	BlockTypes& GetCurrentBlock();
-	sf::RectangleShape& GetMouseHighlight();
-	std::vector< std::vector<int> >& GetTilesContainer();
+	static BlockTypes& GetCurrentBlock();
+	static sf::RectangleShape& GetMouseHighlight();
+	static std::vector< std::vector<int> >& GetTilesContainer();
 
 private:
+	std::vector<int> GetTileAtGivenCoords(int, int) const;
 	void HighlightTile();
 	void DrawAllTiles();
 	bool CheckIfAnyTilePositionMatchesGivenCoords(int x, int y) const;
-	std::vector<int> GetTileAtGivenCoords(int, int) const;
+	static void InitMouseHighlight();
 
 private:
 	sf::RenderWindow* m_ptrMainWindow;
-	sf::RectangleShape m_mouseHighlight;
 	sf::Sprite m_spriteForDrawing;
-	std::vector< std::vector<int> >m_tilesInfoContainer;
 	TextureManager m_textures;
-	BlockTypes m_currentBlock;
+	static BlockTypes m_currentBlock;
+	static std::vector< std::vector<int> >m_tilesInfoContainer;
+	static sf::RectangleShape m_mouseHighlight;
 };

@@ -6,16 +6,17 @@
 #include <string>
 
 #include "TextureManager.h"
+#include "Interface.h"
 
 class MapFileGenerator
 {
 public:
 	MapFileGenerator();
-	void Generate(std::vector<std::vector<int>>&);
+	void Generate();
 
 private:
-	bool CheckIfAnyTilePositionMatchesGivenCoords(int, int, std::vector<std::vector<int>>&)const;
-	std::vector<int> GetTileAtGivenCoords(int x, int y, std::vector<std::vector<int>>&)const;
+	bool CheckIfAnyTilePositionMatchesGivenCoords(int, int)const;
+	std::vector<int> GetTileAtGivenCoords(int x, int y)const;
 
 private:
 	std::string m_fileName;

@@ -4,6 +4,12 @@
 #include <vector>
 #include "BlockTypes.h"
 
+struct TexturesInfo
+{
+	sf::Texture texture;
+	std::string filepath;
+};
+
 class TextureManager
 {
 public:
@@ -15,5 +21,5 @@ private:
 	void LoadOneTexture(const std::string& filepath_to_texture);
 
 private:
-	std::vector<sf::Texture>m_textures;
+	std::vector<TexturesInfo>m_textures;
 };
