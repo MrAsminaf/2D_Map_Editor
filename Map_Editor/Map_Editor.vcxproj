@@ -76,7 +76,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\Adam\Desktop\Dependencies\SFML-2.4.2\include;C:\Users\Adam\SFGUI\include;D:\Projects\C++\Map_Editor\imgui-master;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Adam\Desktop\Dependencies\SFML-2.4.2\include;C:\Users\Adam\SFGUI\include;D:\Projects\C++\Map_Editor\Dependencies\imgui-master;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>C:\Users\Adam\Desktop\Dependencies\SFML-2.4.2\lib;C:\Users\Adam\Desktop\Dependencies\SFGUI\lib\Debug;D:\Projects\C++\Map_Editor\Dependencies\freeglut;D:\Projects\C++\Map_Editor\Dependencies\glew;D:\Projects\C++\Map_Editor\imgui-master;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -123,10 +123,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\imgui-master\imgui-sfml-master\imgui-SFML.cpp" />
-    <ClCompile Include="..\imgui-master\imgui.cpp" />
-    <ClCompile Include="..\imgui-master\imgui_demo.cpp" />
-    <ClCompile Include="..\imgui-master\imgui_draw.cpp" />
+    <ClCompile Include="..\Dependencies\imgui-master\imgui-sfml-master\imgui-SFML.cpp" />
+    <ClCompile Include="..\Dependencies\imgui-master\imgui.cpp" />
+    <ClCompile Include="..\Dependencies\imgui-master\imgui_demo.cpp" />
+    <ClCompile Include="..\Dependencies\imgui-master\imgui_draw.cpp" />
     <ClCompile Include="Background.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="MapLoader.cpp" />
