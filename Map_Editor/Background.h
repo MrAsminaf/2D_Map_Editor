@@ -12,6 +12,9 @@ private:
 	void CreateNet();
 	void SetupGradient(const sf::RenderWindow&);
 	void UpdateGradient(const sf::RenderWindow&);
+public:
+	static sf::Color m_gradientColor;
+	static sf::Color m_netColor;
 private:
 	sf::VertexArray m_verticalLines;
 	sf::VertexArray m_horizontalLines;

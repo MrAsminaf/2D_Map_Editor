@@ -8,7 +8,10 @@ void ExternalMapLoader::LoadMapFromFile(const std::string filename, std::vector<
 	inFile.open(filename);
 
 	if (!inFile.is_open())
+	{
 		std::cerr << "Could not open " << filename << std::endl;
+		return;
+	}
 
 	std::string line;
 	int y = 0;
