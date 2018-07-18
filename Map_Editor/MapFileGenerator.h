@@ -5,7 +5,6 @@
 #include <vector>
 #include <string>
 
-#include "TextureManager.h"
 #include "Interface.h"
 
 class MapFileGenerator

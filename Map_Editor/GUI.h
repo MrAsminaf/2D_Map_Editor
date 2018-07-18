@@ -1,36 +1,24 @@
 #pragma once
 
-#include <SFGUI/SFGUI.hpp>
-#include <SFGUI/Widgets.hpp>
+#include "imgui.h"
+#include "imgui-sfml-master/imgui-SFML.h"
+
 #include <SFML/Graphics.hpp>
 
 #include <string>
-#include <vector>
 
 #include "MapFileGenerator.h"
 #include "MapLoader.h"
-#include "BlockTypes.h"
-#include "Interface.h"
+#include "Background.h"
 
 class GUI
 {
 public:
-	GUI();
-	void Update();
-	void HandleEvents(sf::Event sf_event);
+	void Update(sf::Color& bg_color);
 
 private:
-	void InitPanel();
-	void CreateButtonsForChoosingBlocks();
-	void AddButtonForChosingBlock(const std::string& filepath, const BlockTypes& block_being_chosen);
-	void CreateOpenButton();
-
-private:
-	sfg::Window::Ptr m_sfgWindow;
-	sfg::Box::Ptr m_sfgBox;
-	sfg::Desktop desktop;
 	MapFileGenerator m_generator;
 	ExternalMapLoader m_mapFromFileLoader;
-	const float m_spacingBetweenWidgets;
-	static sfg::Box::Ptr m_scrolledWindowBox;
+	float m_backgroundColorBuffer[3] = { 0.f, 0.f, 0.f };
+	float m_netColorBuffer[3] = { 0.f, 0.f, 0.f };
 };

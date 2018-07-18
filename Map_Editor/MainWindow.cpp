@@ -6,15 +6,22 @@ MainWindow::MainWindow()
 {
 }
 
+MainWindow::~MainWindow()
+{
+	ImGui::SFML::Shutdown();
+}
+
 MainWindow::MainWindow(int window_width, int window_height)
 	:
 	m_mainWindow(sf::VideoMode(window_width, window_height), "Map Editor"),
-	m_backgroundColor( sf::Color(30, 30, 30, 55) ),
+	m_backgroundColor(sf::Color(30, 30, 30, 55)),
 	m_interface(m_mainWindow),
 	m_camera(m_mainWindow),
 	m_background(m_mainWindow),
 	m_gui()
 {
+	m_mainWindow.setVerticalSyncEnabled(true);
+	ImGui::SFML::Init(m_mainWindow);
 	m_mainWindow.resetGLStates();
 }
 
@@ -23,6 +30,7 @@ void MainWindow::RunMainLoop()
 	while (m_mainWindow.isOpen()) 
 	{
 		float delta_time = m_deltaTimer.restart().asSeconds();
+		ImGui::SFML::Update(m_mainWindow, m_imguiClock.restart());
 		HandleWindowEvents();
 		Input(delta_time);
 		Update();
@@ -41,15 +49,15 @@ void MainWindow::Update()
 	m_background.Update(m_mainWindow);
 	m_camera.UpdateMainWindowView(m_mainWindow);
 	m_interface.Update();
-	m_gui.Update();
+	m_gui.Update(m_backgroundColor);
 }
 
 void MainWindow::Render()
 {
-	m_mainWindow.clear(m_backgroundColor);
+	m_mainWindow.clear(Background::m_gradientColor);
 	m_background.Draw(m_mainWindow);
 	m_interface.Draw();
-	m_sfgui.Display(m_mainWindow);
+	ImGui::SFML::Render(m_mainWindow);
 	m_mainWindow.display();
 }
 
@@ -58,7 +66,7 @@ void MainWindow::HandleWindowEvents()
 	sf::Event sf_event;
 		while (m_mainWindow.pollEvent(sf_event)) 
 		{
-			m_gui.HandleEvents(sf_event);
+			ImGui::SFML::ProcessEvent(sf_event);
 
 			if (sf_event.type == sf::Event::Closed) 
 				m_mainWindow.close();
