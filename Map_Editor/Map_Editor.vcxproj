@@ -69,18 +69,21 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\Adam\Desktop\Dependencies\SFML-2.4.2\include;C:\Users\Adam\SFGUI\include;D:\Projects\C++\Map_Editor\Dependencies\imgui-master;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Adam\Desktop\Dependencies\SFML-2.4.2\include;C:\Users\Adam\SFGUI\include;D:\Projects\C++\Map_Editor\Dependencies\imgui-master;D:\Projects\C++\Map_Editor\Map_Editor\Src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>C:\Users\Adam\Desktop\Dependencies\SFML-2.4.2\lib;C:\Users\Adam\Desktop\Dependencies\SFGUI\lib\Debug;D:\Projects\C++\Map_Editor\Dependencies\freeglut;D:\Projects\C++\Map_Editor\Dependencies\glew;D:\Projects\C++\Map_Editor\imgui-master;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-audio-d.lib;sfml-graphics-d.lib;sfml-main-d.lib;sfml-network-d.lib;sfml-system-d.lib;sfml-window-d.lib;opengl32.lib;sfgui-d.lib;freeglut.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-audio-d.lib;sfml-graphics-d.lib;sfml-main-d.lib;sfml-network-d.lib;sfml-system-d.lib;sfml-window-d.lib;opengl32.lib;freeglut.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -127,26 +130,34 @@
     <ClCompile Include="..\Dependencies\imgui-master\imgui.cpp" />
     <ClCompile Include="..\Dependencies\imgui-master\imgui_demo.cpp" />
     <ClCompile Include="..\Dependencies\imgui-master\imgui_draw.cpp" />
-    <ClCompile Include="Background.cpp" />
-    <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="MapLoader.cpp" />
-    <ClCompile Include="GUI.cpp" />
-    <ClCompile Include="Interface.cpp" />
-    <ClCompile Include="Main.cpp" />
-    <ClCompile Include="MainWindow.cpp" />
-    <ClCompile Include="MapFileGenerator.cpp" />
-    <ClCompile Include="TextureManager.cpp" />
+    <ClCompile Include="Src\Interface\Background.cpp" />
+    <ClCompile Include="Src\Interface\Camera.cpp" />
+    <ClCompile Include="Src\Interface\GUI.cpp" />
+    <ClCompile Include="Src\Interface\Interface.cpp" />
+    <ClCompile Include="Src\Window\Main.cpp" />
+    <ClCompile Include="Src\Window\MainWindow.cpp" />
+    <ClCompile Include="Src\Map_Managment\MapFileGenerator.cpp" />
+    <ClCompile Include="Src\Map_Managment\MapLoader.cpp" />
+    <ClCompile Include="Src\Resource_Managment\TextureManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Background.h" />
-    <ClInclude Include="BlockTypes.h" />
-    <ClInclude Include="Camera.h" />
-    <ClInclude Include="MapLoader.h" />
-    <ClInclude Include="GUI.h" />
-    <ClInclude Include="Interface.h" />
-    <ClInclude Include="MainWindow.h" />
-    <ClInclude Include="MapFileGenerator.h" />
-    <ClInclude Include="TextureManager.h" />
+    <ClInclude Include="Src\Interface\Background.h" />
+    <ClInclude Include="Src\Resource_Managment\BlockTypes.h" />
+    <ClInclude Include="Src\Interface\Camera.h" />
+    <ClInclude Include="Src\Interface\GUI.h" />
+    <ClInclude Include="Src\Interface\Interface.h" />
+    <ClInclude Include="Src\Window\MainWindow.h" />
+    <ClInclude Include="Src\Map_Managment\MapFileGenerator.h" />
+    <ClInclude Include="Src\Map_Managment\MapLoader.h" />
+    <ClInclude Include="Src\Resource_Managment\TextureManager.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Res\terrain_platform_center.png" />
+    <Image Include="Res\terrain_platform_left.png" />
+    <Image Include="Res\terrain_platform_right.png" />
+    <Image Include="Res\terrain_top_center.png" />
+    <Image Include="Res\terrain_top_left.png" />
+    <Image Include="Res\terrain_top_right.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

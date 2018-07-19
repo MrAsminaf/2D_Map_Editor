@@ -2,7 +2,7 @@
 
 MapFileGenerator::MapFileGenerator()
 	:
-	m_fileName("platformer.txt")
+	m_fileName("Maps/platformer.txt")
 {
 }
 

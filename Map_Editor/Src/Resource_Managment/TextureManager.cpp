@@ -22,12 +22,12 @@ void TextureManager::LoadAllTexturesFromFiles()
 	LoadOneTexture("dirt_dltr.png");
 	LoadOneTexture("dirt_tldr.png");*/
 
-	LoadOneTexture("terrain_platform_left.png"		, BlockTypes::ENUM_TERRAIN_PLATFORM_LEFT);
-	LoadOneTexture("terrain_platform_center.png"	, BlockTypes::ENUM_TERRAIN_PLATFORM_CENTER);
-	LoadOneTexture("terrain_platform_right.png"		, BlockTypes::ENUM_TERRAIN_PLATFROM_RIGHT);
-	LoadOneTexture("terrain_top_left.png"			, BlockTypes::ENUM_TERRAIN_TOP_LEFT);
-	LoadOneTexture("terrain_top_center.png"			, BlockTypes::ENUM_TERRAIN_TOP_CENTER);
-	LoadOneTexture("terrain_top_right.png"			, BlockTypes::ENUM_TERRAIN_TOP_RIGHT);
+	LoadOneTexture("Res/terrain_platform_left.png"		, BlockTypes::ENUM_TERRAIN_PLATFORM_LEFT);
+	LoadOneTexture("Res/terrain_platform_center.png"	, BlockTypes::ENUM_TERRAIN_PLATFORM_CENTER);
+	LoadOneTexture("Res/terrain_platform_right.png"		, BlockTypes::ENUM_TERRAIN_PLATFROM_RIGHT);
+	LoadOneTexture("Res/terrain_top_left.png"			, BlockTypes::ENUM_TERRAIN_TOP_LEFT);
+	LoadOneTexture("Res/terrain_top_center.png"			, BlockTypes::ENUM_TERRAIN_TOP_CENTER);
+	LoadOneTexture("Res/terrain_top_right.png"			, BlockTypes::ENUM_TERRAIN_TOP_RIGHT);
 }
 
 void TextureManager::LoadOneTexture(const std::string& filepath_to_texture, const BlockTypes& block_type)

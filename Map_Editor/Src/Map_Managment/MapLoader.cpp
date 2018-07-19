@@ -5,7 +5,7 @@ void ExternalMapLoader::LoadMapFromFile(const std::string filename, std::vector<
 	std::cout << "LoadMapFromFile: " << filename << std::endl;
 	ClearVectorBeforeLoadingMap(tilesVector);
 	std::ifstream inFile;
-	inFile.open(filename);
+	inFile.open("Maps/"+filename);
 
 	if (!inFile.is_open())
 	{

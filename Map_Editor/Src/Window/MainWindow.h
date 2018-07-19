@@ -5,9 +5,9 @@
 #include <SFML/Graphics.hpp>
 #include <SFGUI/SFGUI.hpp>
 
-#include "Camera.h"
-#include "Background.h"
-#include "GUI.h"
+#include "Interface/Camera.h"
+#include "Interface/Background.h"
+#include "Interface/GUI.h"
 
 class MainWindow
 {

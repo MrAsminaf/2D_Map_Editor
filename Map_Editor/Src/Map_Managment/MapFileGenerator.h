@@ -5,7 +5,7 @@
 #include <vector>
 #include <string>
 
-#include "Interface.h"
+#include "Interface/Interface.h"
 
 class MapFileGenerator
 {

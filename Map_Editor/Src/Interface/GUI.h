@@ -7,8 +7,8 @@
 
 #include <string>
 
-#include "MapFileGenerator.h"
-#include "MapLoader.h"
+#include "Map_Managment/MapFileGenerator.h"
+#include "Map_Managment/MapLoader.h"
 #include "Background.h"
 
 class GUI
