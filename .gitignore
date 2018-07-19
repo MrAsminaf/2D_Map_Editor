@@ -4,7 +4,6 @@
 # My ignores
 *.txt
 *.dll
-*.png
 
 # User-specific files
 *.suo
