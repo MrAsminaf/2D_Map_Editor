@@ -1,9 +1,5 @@
 #pragma once
 
-#include <SFGUI/SFGUI.hpp>
-#include <SFGUI/Widgets.hpp>
-#include <SFML/Graphics.hpp>
-
 #include <vector>
 #include <iostream>
 #include <string>

@@ -3,7 +3,6 @@
 #include "imgui.h"
 #include "imgui-sfml-master/imgui-SFML.h"
 #include <SFML/Graphics.hpp>
-#include <SFGUI/SFGUI.hpp>
 
 #include "Interface/Camera.h"
 #include "Interface/Background.h"
