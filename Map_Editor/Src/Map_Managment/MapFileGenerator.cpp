@@ -23,15 +23,14 @@ void MapFileGenerator::Generate()
 		cerr << "Could not open " << m_fileName << " file to generate map" << endl;
 
 	std::string outputLine;
+	constexpr int BLOCK_ID = 2;
 	for (int y = 0; y < 120; ++y)
 	{
 		outputLine.clear();
 		for (int x = 0; x < 400; ++x)
 		{
 			if (CheckIfAnyTilePositionMatchesGivenCoords(x, y))
-			{
-				outputLine += std::to_string(GetTileAtGivenCoords(x, y)[2]);
-			}
+				outputLine += char(GetTileAtGivenCoords(x, y)[BLOCK_ID]);
 			else
 				outputLine.append(" ");
 		}

@@ -51,8 +51,8 @@ void Interface::DeleteTile()
 	int x = (int(m_ptrMainWindow->mapPixelToCoords(mousePos).x / 16));
 	int y = (int(m_ptrMainWindow->mapPixelToCoords(mousePos).y / 16));
 
-	int xCoordOfDeletedTile = 0; // for readability in loop
-	int yCoordOfDeletedTile = 1; // for readability in loop
+	int xCoordOfDeletedTile = 0;
+	int yCoordOfDeletedTile = 1;
 
 	for (auto it = m_tilesInfoContainer.cbegin(); it != m_tilesInfoContainer.cend(); ++it)
 	{
@@ -80,24 +80,26 @@ void Interface::HighlightTile()
 
 void Interface::DrawAllTiles()
 {
-	const int x = 0;
-	const int y = 1;
-	const int id = 2;
-	const int tileSize = 16;
+	constexpr int X = 0;
+	constexpr int Y = 1;
+	constexpr int ID = 2;
+	constexpr int TILE_SIZE = 16;
 
 	for (auto& tile : m_tilesInfoContainer)
 	{
-		m_spriteForDrawing.setPosition(float(tile[x] * tileSize), float(tile[y] * tileSize));
-		m_spriteForDrawing.setTexture(m_textures.GetTextureById(tile[id]));
+		m_spriteForDrawing.setPosition(float(tile[X] * TILE_SIZE), float(tile[Y] * TILE_SIZE));
+		m_spriteForDrawing.setTexture(m_textures.GetTextureById(tile[ID]));
 		m_ptrMainWindow->draw(m_spriteForDrawing);
 	}
 }
 
-bool Interface::CheckIfAnyTilePositionMatchesGivenCoords(int x_coord, int y_coord) const
+bool Interface::CheckIfAnyTilePositionMatchesGivenCoords(int x, int y) const
 {
+	constexpr int X = 0, Y = 1;
+
 	for (auto& it : m_tilesInfoContainer)
 	{
-		if (it[0] == x_coord && it[1] == y_coord)
+		if (it[X] == x && it[Y] == y)
 			return true;
 	}
 	return false;
@@ -105,9 +107,11 @@ bool Interface::CheckIfAnyTilePositionMatchesGivenCoords(int x_coord, int y_coor
 
 std::vector<int> Interface::GetTileAtGivenCoords(int x, int y) const
 {
+	constexpr int X = 0, Y = 1;
+
 	for (auto& it : m_tilesInfoContainer)
 	{
-		if (it[0] == x && it[1] == y)
+		if (it[X] == x && it[Y] == y)
 			return it;
 	}
 }

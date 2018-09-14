@@ -17,15 +17,15 @@ void ExternalMapLoader::LoadMapFromFile(const std::string filename, std::vector<
 	int y = 0;
 	while (std::getline(inFile, line))
 	{
-		for (auto i = 0; i < line.size(); ++i)
+		for (auto x = 0; x < line.size(); ++x)
 		{
-			if (line[i] != ' ')
+			if (line[x] != ' ')
 			{
-				std::vector<int> temp;
-				temp.push_back(i);
-				temp.push_back(y);
-				temp.push_back(line[i]-'0');
-				tilesVector.push_back(temp);
+				std::vector<int> tempTile;
+				tempTile.push_back(x);
+				tempTile.push_back(y);
+				tempTile.push_back(line[x]);
+				tilesVector.push_back(tempTile);
 			}
 		}
 		++y;
