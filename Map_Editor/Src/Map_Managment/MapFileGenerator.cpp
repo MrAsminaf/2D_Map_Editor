@@ -14,7 +14,7 @@ void MapFileGenerator::Generate()
 	using std::ofstream;
 
 	cout << "Invoked Generate method" << endl; // debug info
-	cout << Interface::GetTilesContainer().size() << endl; //debug info
+	cout << Foreground::GetTilesContainer().size() << endl; //debug info
 
 	ofstream outputFile;
 	outputFile.open(m_fileName);
@@ -30,7 +30,7 @@ void MapFileGenerator::Generate()
 		for (int x = 0; x < 400; ++x)
 		{
 			if (CheckIfAnyTilePositionMatchesGivenCoords(x, y))
-				outputLine += char(GetTileAtGivenCoords(x, y)[BLOCK_ID]);
+				outputLine += char(GetTileAtGivenCoords<ForegroundBlock>(x, y).blockType);
 			else
 				outputLine.append(" ");
 		}
@@ -42,19 +42,20 @@ void MapFileGenerator::Generate()
 
 bool MapFileGenerator::CheckIfAnyTilePositionMatchesGivenCoords(int x, int y) const
 {
-	for (auto &it : Interface::GetTilesContainer())
+	for (auto &it : Foreground::GetTilesContainer())
 	{
-		if (it[0] == x && it[1] == y)
+		if (it.x == x && it.y == y)
 			return true;
 	}
 	return false;
 }
 
-std::vector<int> MapFileGenerator::GetTileAtGivenCoords(int x, int y) const
+template<typename T>
+T MapFileGenerator::GetTileAtGivenCoords(int x, int y) const
 {
-	for (auto &it : Interface::GetTilesContainer())
+	for (auto &it : Foreground::GetTilesContainer())
 	{
-		if (it[0] == x && it[1] == y)
+		if (it.x == x && it.y == y)
 			return it;
 	}
 }

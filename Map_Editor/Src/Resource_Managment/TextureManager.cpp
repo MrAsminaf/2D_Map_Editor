@@ -29,6 +29,8 @@ void TextureManager::LoadAllTexturesFromFiles()
 	LoadOneTexture("Res/terrain_center_left.png"		, BlockTypes::ENUM_TERRAIN_CENTER_LEFT);
 	LoadOneTexture("Res/terrain_center.png"				, BlockTypes::ENUM_TERRAIN_CENTER);
 	LoadOneTexture("Res/terrain_center_right.png"		, BlockTypes::ENUM_TERRAIN_CENTER_RIGHT);
+
+	LoadOneTexture("Res/midground_left_B_shadowed.png"	, BlockTypes::ENUM_MIDGROUND_LEFT_B_SHADOWED);
 }
 
 void TextureManager::LoadOneTexture(const std::string& filepath_to_texture, const BlockTypes& block_type)

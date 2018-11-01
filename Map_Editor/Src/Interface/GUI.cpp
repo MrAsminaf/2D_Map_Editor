@@ -30,13 +30,22 @@ void GUI::Update(sf::Color& bg_color)
 		m_generator.Generate();
 	}
 
+	ImGui::Begin("Mode");
+	ImGui::Button("Foreground");
+	ImGui::SameLine(100.f);
+	ImGui::Button("Background");
+	ImGui::End();
+
 	for (const auto& texture : TextureManager::m_textures)
 	{
+		ImGui::Spacing();
+		ImGui::Spacing();
+
 		if (ImGui::ImageButton(texture.texture, sf::Vector2f(50, 50)))
 		{
-			Interface::GetMouseHighlight().setTexture(&texture.texture);
-			Interface::GetMouseHighlight().setFillColor(sf::Color(255, 255, 255, 100));
-			Interface::GetCurrentBlock() = texture.blockType;
+			Foreground::GetMouseHighlight().setTexture(&texture.texture);
+			Foreground::GetMouseHighlight().setFillColor(sf::Color(255, 255, 255, 100));
+			Foreground::GetCurrentBlock() = texture.blockType;
 		}
 	}
 	ImGui::End();
@@ -46,7 +55,7 @@ void GUI::Update(sf::Color& bg_color)
 	ImGui::Text("Write name of the file and click 'Enter'");
 	if (ImGui::InputText("Name", buf, 256, 32))
 	{
-		m_mapFromFileLoader.LoadMapFromFile(buf, Interface::GetTilesContainer());
+		m_mapFromFileLoader.LoadMapFromFile(buf, Foreground::GetTilesContainer());
 	}
 	ImGui::End();
 }

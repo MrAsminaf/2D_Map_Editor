@@ -5,7 +5,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <vector>
-#include<iostream> // debug
+#include <iostream> // debug
 #include "BlockTypes.h"
 
 struct TexturesInfo

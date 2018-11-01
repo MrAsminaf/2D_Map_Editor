@@ -7,6 +7,8 @@
 #include "Interface/Camera.h"
 #include "Interface/Background.h"
 #include "Interface/GUI.h"
+#include "Interface/Foreground.h"
+#include "Resource_Managment/BlockTypes.h"
 
 class MainWindow
 {
@@ -30,7 +32,7 @@ private:
 	sf::Color m_backgroundColor;
 	sf::Clock m_deltaTimer;
 	sf::Clock m_imguiClock;
-	Interface m_interface;
+	Foreground m_foreground;
 	Camera m_camera;
 	Background m_background;
 	GUI m_gui;

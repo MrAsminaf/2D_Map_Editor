@@ -4,8 +4,7 @@
 #include <fstream>
 #include <vector>
 #include <string>
-
-#include "Interface/Interface.h"
+#include "Interface/Foreground.h"
 
 class MapFileGenerator
 {
@@ -15,8 +14,9 @@ public:
 
 private:
 	bool CheckIfAnyTilePositionMatchesGivenCoords(int, int)const;
-	std::vector<int> GetTileAtGivenCoords(int x, int y)const;
 
+	template<typename T>
+	T GetTileAtGivenCoords(int x, int y)const;
 private:
 	std::string m_fileName;
 };
