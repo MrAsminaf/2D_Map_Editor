@@ -31,9 +31,15 @@ void GUI::Update(sf::Color& bg_color)
 	}
 
 	ImGui::Begin("Mode");
-	ImGui::Button("Foreground");
+	if (ImGui::Button("Foreground"))
+	{
+		Background::SetMode(Mode::FOREGROUND);
+	}
 	ImGui::SameLine(100.f);
-	ImGui::Button("Background");
+	if (ImGui::Button("Background"))
+	{
+		Background::SetMode(Mode::BACKGROUND);
+	}
 	ImGui::End();
 
 	for (const auto& texture : TextureManager::m_textures)

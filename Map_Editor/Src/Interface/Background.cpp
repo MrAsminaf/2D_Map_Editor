@@ -2,39 +2,100 @@
 
 sf::Color Background::m_gradientColor(40, 40, 40);
 sf::Color Background::m_netColor(64, 64, 64);
+Mode Background::m_currentMode(Mode::FOREGROUND);
 
 Background::Background(sf::RenderWindow& rWindow)
 	:
-	m_verticalLines(sf::Lines, 2000),
-	m_horizontalLines(sf::Lines, 2000),
+	m_foregroundVerticalLines(sf::Lines, 2000),
+	m_foregroundHorizontalLines(sf::Lines, 2000),
+	m_backgroundVerticalLines(sf::Lines, 2000),
+	m_backgroundHorizontalLines(sf::Lines, 2000),
 	m_gradient(sf::Quads, 4),
 	m_fixedTileSize(16)
 {
 	SetupGradient(rWindow);
-	CreateNet();
+	CreateForegroundNet();
 }
 
-void Background::Draw(sf::RenderWindow & rWindow)
+void Background::Draw(sf::RenderWindow & mainWindow)
 {
-	rWindow.draw(m_gradient);
-	rWindow.draw(m_verticalLines);
-	rWindow.draw(m_horizontalLines);
+	mainWindow.draw(m_gradient);
+	if (m_currentMode == Mode::FOREGROUND)
+	{
+		mainWindow.draw(m_foregroundVerticalLines);
+		mainWindow.draw(m_foregroundHorizontalLines);
+	}
+	else
+	{
+		mainWindow.draw(m_backgroundVerticalLines);
+		mainWindow.draw(m_backgroundHorizontalLines);
+	}
 }
 
-void Background::Update(const sf::RenderWindow & rWindow)
+void Background::Update(const sf::RenderWindow & mainWindow)
 {
-	UpdateGradient(rWindow);
+	UpdateGradient(mainWindow);
 }
 
-void Background::CreateNet()
+void Background::SetMode(const Mode mode)
+{
+	m_currentMode = mode;
+}
+
+void Background::CreateForegroundNet()
+{
+	int index = 0;
+	for (int i = 0; i < 400; ++i)
+	{
+		sf::Vertex* singleForegroundLine = &m_foregroundVerticalLines[index];
+		sf::Vertex* singleBackgroundLine = &m_backgroundVerticalLines[index];
+
+		singleForegroundLine->position = sf::Vector2f(i * m_fixedTileSize, 0);
+		singleBackgroundLine->position = sf::Vector2f(i * m_fixedTileSize, -m_fixedTileSize / 2);
+
+		singleForegroundLine->color = m_netColor;
+		singleBackgroundLine->color = m_netColor;
+
+		(singleForegroundLine + 1)->position = sf::Vector2f(i * m_fixedTileSize, 1904);
+		(singleBackgroundLine + 1)->position = sf::Vector2f(i * m_fixedTileSize, 1904 - (m_fixedTileSize / 2));
+
+		(singleForegroundLine + 1)->color = m_netColor;
+		(singleBackgroundLine + 1)->color = m_netColor;
+
+		index += 2;
+	}
+
+	index = 0;
+	for (int i = 0; i < 120; ++i)
+	{
+		sf::Vertex* singleForegroundLine = &m_foregroundHorizontalLines[index];
+		sf::Vertex* singleBackgroundLine = &m_backgroundHorizontalLines[index];
+
+		singleForegroundLine->position = sf::Vector2f(0, i * m_fixedTileSize);
+		singleBackgroundLine->position = sf::Vector2f(0, i*m_fixedTileSize - (m_fixedTileSize / 2));
+
+		singleForegroundLine->color = m_netColor;
+		singleBackgroundLine->color = m_netColor;
+
+		(singleForegroundLine + 1)->position = sf::Vector2f(6400, i * m_fixedTileSize);
+		(singleBackgroundLine + 1)->position = sf::Vector2f(6400, i * m_fixedTileSize - (m_fixedTileSize / 2));
+
+		(singleForegroundLine + 1)->color = m_netColor;
+		(singleBackgroundLine + 1)->color = m_netColor;
+
+		index += 2;
+	}
+}
+
+void Background::CreateBackgroundNet()
 {
 	int verticalVertexIndex = 0;
 	for (int i = 0; i < 400; ++i)
 	{
-		sf::Vertex* singleLine = &m_verticalLines[verticalVertexIndex];
-		singleLine->position = sf::Vector2f(i*m_fixedTileSize, 0);
+		sf::Vertex* singleLine = &m_foregroundVerticalLines[verticalVertexIndex];
+		singleLine->position = sf::Vector2f(i * m_fixedTileSize, 0);
 		singleLine->color = m_netColor;
-		(singleLine + 1)->position = sf::Vector2f(i*m_fixedTileSize, 1904);
+		(singleLine + 1)->position = sf::Vector2f(i * m_fixedTileSize, 1904);
 		(singleLine + 1)->color = m_netColor;
 		verticalVertexIndex += 2;
 	}
@@ -42,21 +103,21 @@ void Background::CreateNet()
 	int horizontalVertexIndex = 0;
 	for (int i = 0; i < 120; ++i)
 	{
-		sf::Vertex* singleLine = &m_horizontalLines[horizontalVertexIndex];
-		singleLine->position = sf::Vector2f(0, i*m_fixedTileSize);
+		sf::Vertex* singleLine = &m_foregroundHorizontalLines[horizontalVertexIndex];
+		singleLine->position = sf::Vector2f(0, i * m_fixedTileSize);
 		singleLine->color = m_netColor;
-		(singleLine + 1)->position = sf::Vector2f(6400, i*m_fixedTileSize);
+		(singleLine + 1)->position = sf::Vector2f(6400, i * m_fixedTileSize);
 		(singleLine + 1)->color = m_netColor;
 		horizontalVertexIndex += 2;
 	}
 }
 
-void Background::SetupGradient(const sf::RenderWindow & rWindow)
+void Background::SetupGradient(const sf::RenderWindow & mainWindow)
 {
 	m_gradient[0].position = sf::Vector2f(0, 0);
-	m_gradient[1].position = sf::Vector2f(float(rWindow.getSize().x), 0);
-	m_gradient[2].position = sf::Vector2f(float(rWindow.getSize().x), float(rWindow.getSize().y));
-	m_gradient[3].position = sf::Vector2f(0, float(rWindow.getSize().y));
+	m_gradient[1].position = sf::Vector2f(float(mainWindow.getSize().x), 0);
+	m_gradient[2].position = sf::Vector2f(float(mainWindow.getSize().x), float(mainWindow.getSize().y));
+	m_gradient[3].position = sf::Vector2f(0, float(mainWindow.getSize().y));
 
 	m_gradient[0].color = m_gradientColor;
 	m_gradient[1].color = m_gradientColor;
@@ -64,12 +125,12 @@ void Background::SetupGradient(const sf::RenderWindow & rWindow)
 	m_gradient[3].color = m_gradientColor;
 }
 
-void Background::UpdateGradient(const sf::RenderWindow & rWindow)
+void Background::UpdateGradient(const sf::RenderWindow & mainWindow)
 {
-	m_gradient[0].position = sf::Vector2f(rWindow.mapPixelToCoords(sf::Vector2i(0, 0)));
-	m_gradient[1].position = sf::Vector2f(rWindow.mapPixelToCoords(sf::Vector2i(rWindow.getSize().x, 0)));
-	m_gradient[2].position = sf::Vector2f(rWindow.mapPixelToCoords(sf::Vector2i(rWindow.getSize().x, rWindow.getSize().y)));
-	m_gradient[3].position = sf::Vector2f(rWindow.mapPixelToCoords(sf::Vector2i(0, rWindow.getSize().y)));
+	m_gradient[0].position = sf::Vector2f(mainWindow.mapPixelToCoords(sf::Vector2i(0, 0)));
+	m_gradient[1].position = sf::Vector2f(mainWindow.mapPixelToCoords(sf::Vector2i(mainWindow.getSize().x, 0)));
+	m_gradient[2].position = sf::Vector2f(mainWindow.mapPixelToCoords(sf::Vector2i(mainWindow.getSize().x, mainWindow.getSize().y)));
+	m_gradient[3].position = sf::Vector2f(mainWindow.mapPixelToCoords(sf::Vector2i(0, mainWindow.getSize().y)));
 
 	m_gradient[0].color = m_gradientColor;
 	m_gradient[1].color = m_gradientColor;
@@ -78,9 +139,9 @@ void Background::UpdateGradient(const sf::RenderWindow & rWindow)
 
 	for (int i = 0; i < 800; ++i)
 	{
-		m_verticalLines[i].color = m_netColor;
+		m_foregroundVerticalLines[i].color = m_netColor;
 		if (i <= 240)
-			m_horizontalLines[i].color = m_netColor;
+			m_foregroundHorizontalLines[i].color = m_netColor;
 	}
 
 }
