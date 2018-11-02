@@ -1,10 +1,10 @@
-#include "Background.h"
+#include "Layout.h"
 
-sf::Color Background::m_gradientColor(40, 40, 40);
-sf::Color Background::m_netColor(64, 64, 64);
-Mode Background::m_currentMode(Mode::FOREGROUND);
+sf::Color Layout::m_gradientColor(40, 40, 40);
+sf::Color Layout::m_netColor(64, 64, 64);
+Mode Layout::m_currentMode(Mode::FOREGROUND);
 
-Background::Background(sf::RenderWindow& rWindow)
+Layout::Layout(sf::RenderWindow& rWindow)
 	:
 	m_foregroundVerticalLines(sf::Lines, 2000),
 	m_foregroundHorizontalLines(sf::Lines, 2000),
@@ -17,7 +17,7 @@ Background::Background(sf::RenderWindow& rWindow)
 	CreateForegroundNet();
 }
 
-void Background::Draw(sf::RenderWindow & mainWindow)
+void Layout::Draw(sf::RenderWindow & mainWindow)
 {
 	mainWindow.draw(m_gradient);
 	if (m_currentMode == Mode::FOREGROUND)
@@ -32,17 +32,17 @@ void Background::Draw(sf::RenderWindow & mainWindow)
 	}
 }
 
-void Background::Update(const sf::RenderWindow & mainWindow)
+void Layout::Update(const sf::RenderWindow & mainWindow)
 {
 	UpdateGradient(mainWindow);
 }
 
-void Background::SetMode(const Mode mode)
+void Layout::SetMode(const Mode mode)
 {
 	m_currentMode = mode;
 }
 
-void Background::CreateForegroundNet()
+void Layout::CreateForegroundNet()
 {
 	int index = 0;
 	for (int i = 0; i < 400; ++i)
@@ -87,7 +87,7 @@ void Background::CreateForegroundNet()
 	}
 }
 
-void Background::CreateBackgroundNet()
+void Layout::CreateBackgroundNet()
 {
 	int verticalVertexIndex = 0;
 	for (int i = 0; i < 400; ++i)
@@ -112,7 +112,7 @@ void Background::CreateBackgroundNet()
 	}
 }
 
-void Background::SetupGradient(const sf::RenderWindow & mainWindow)
+void Layout::SetupGradient(const sf::RenderWindow & mainWindow)
 {
 	m_gradient[0].position = sf::Vector2f(0, 0);
 	m_gradient[1].position = sf::Vector2f(float(mainWindow.getSize().x), 0);
@@ -125,7 +125,7 @@ void Background::SetupGradient(const sf::RenderWindow & mainWindow)
 	m_gradient[3].color = m_gradientColor;
 }
 
-void Background::UpdateGradient(const sf::RenderWindow & mainWindow)
+void Layout::UpdateGradient(const sf::RenderWindow & mainWindow)
 {
 	m_gradient[0].position = sf::Vector2f(mainWindow.mapPixelToCoords(sf::Vector2i(0, 0)));
 	m_gradient[1].position = sf::Vector2f(mainWindow.mapPixelToCoords(sf::Vector2i(mainWindow.getSize().x, 0)));

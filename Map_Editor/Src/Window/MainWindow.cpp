@@ -17,7 +17,7 @@ MainWindow::MainWindow(int window_width, int window_height)
 	m_backgroundColor(sf::Color(30, 30, 30, 55)),
 	m_foreground(m_mainWindow),
 	m_camera(m_mainWindow),
-	m_background(m_mainWindow),
+	m_layout(m_mainWindow),
 	m_gui()
 {
 	m_mainWindow.setVerticalSyncEnabled(true);
@@ -46,7 +46,7 @@ void MainWindow::Input(float delta_time)
 
 void MainWindow::Update()
 {
-	m_background.Update(m_mainWindow);
+	m_layout.Update(m_mainWindow);
 	m_camera.UpdateMainWindowView(m_mainWindow);
 	m_foreground.Update();
 	m_gui.Update(m_backgroundColor);
@@ -54,8 +54,8 @@ void MainWindow::Update()
 
 void MainWindow::Render()
 {
-	m_mainWindow.clear(Background::m_gradientColor);
-	m_background.Draw(m_mainWindow);
+	m_mainWindow.clear(Layout::m_gradientColor);
+	m_layout.Draw(m_mainWindow);
 	m_foreground.Draw();
 	ImGui::SFML::Render(m_mainWindow);
 	m_mainWindow.display();

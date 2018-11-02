@@ -130,10 +130,10 @@
     <ClCompile Include="..\Dependencies\imgui-master\imgui.cpp" />
     <ClCompile Include="..\Dependencies\imgui-master\imgui_demo.cpp" />
     <ClCompile Include="..\Dependencies\imgui-master\imgui_draw.cpp" />
-    <ClCompile Include="Src\Interface\Background.cpp" />
     <ClCompile Include="Src\Interface\Camera.cpp" />
     <ClCompile Include="Src\Interface\Foreground.cpp" />
     <ClCompile Include="Src\Interface\GUI.cpp" />
+    <ClCompile Include="Src\Interface\Layout.cpp" />
     <ClCompile Include="Src\Window\Main.cpp" />
     <ClCompile Include="Src\Window\MainWindow.cpp" />
     <ClCompile Include="Src\Map_Managment\MapFileGenerator.cpp" />
@@ -141,7 +141,7 @@
     <ClCompile Include="Src\Resource_Managment\TextureManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Src\Interface\Background.h" />
+    <ClInclude Include="Src\Interface\Layout.h" />
     <ClInclude Include="Src\Interface\Foreground.h" />
     <ClInclude Include="Src\Interface\Interaface.h" />
     <ClInclude Include="Src\Resource_Managment\BlockTypes.h" />

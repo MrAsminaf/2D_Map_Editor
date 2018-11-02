@@ -6,7 +6,7 @@
 #include "imgui-sfml-master/imgui-SFML.h"
 #include "Map_Managment/MapFileGenerator.h"
 #include "Map_Managment/MapLoader.h"
-#include "Background.h"
+#include "Layout.h"
 
 class GUI
 {

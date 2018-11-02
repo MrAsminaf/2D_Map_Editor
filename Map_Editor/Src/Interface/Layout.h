@@ -8,10 +8,10 @@ enum Mode
 	BACKGROUND
 };
 
-class Background
+class Layout
 {
 public:
-	Background(sf::RenderWindow&);
+	Layout(sf::RenderWindow&);
 	void Draw(sf::RenderWindow&);
 	void Update(const sf::RenderWindow&);
 	static void SetMode(const Mode mode);

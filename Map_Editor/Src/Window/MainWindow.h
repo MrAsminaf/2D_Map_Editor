@@ -5,7 +5,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "Interface/Camera.h"
-#include "Interface/Background.h"
+#include "Interface/Layout.h"
 #include "Interface/GUI.h"
 #include "Interface/Foreground.h"
 #include "Resource_Managment/BlockTypes.h"
@@ -34,6 +34,6 @@ private:
 	sf::Clock m_imguiClock;
 	Foreground m_foreground;
 	Camera m_camera;
-	Background m_background;
+	Layout m_layout;
 	GUI m_gui;
 };
