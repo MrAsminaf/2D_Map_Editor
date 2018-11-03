@@ -1,14 +1,15 @@
 #include "Foreground.h"
 
 // --- Static members initialization --- //
-std::vector<ForegroundBlock> Foreground::foregroundBlocks;
+std::vector<Block> Foreground::foregroundBlocks;
+std::vector<Block> Foreground::backgroundBlocks;
 BlockTypes Foreground::currentBlock = BlockTypes::ENUM_NONE;
 sf::RectangleShape Foreground::mouseHighlight;
 
 void Foreground::Draw()
 {
-	m_mainWindowPtr->draw(mouseHighlight);
 	DrawTiles();
+	m_mainWindowPtr->draw(mouseHighlight);
 }
 
 void Foreground::Update()
@@ -30,18 +31,32 @@ BlockTypes & Foreground::GetCurrentBlock()
 void Foreground::HighlightTile()
 {
 	auto mousePos = sf::Mouse::getPosition(*m_mainWindowPtr);
-	int x = (int(m_mainWindowPtr->mapPixelToCoords(mousePos).x / 16));
-	int y = (int(m_mainWindowPtr->mapPixelToCoords(mousePos).y / 16));
 
-	x *= 16;
-	y *= 16;
+	if (Layout::GetMode() == Mode::FOREGROUND)
+	{
+		int x = (int (m_mainWindowPtr->mapPixelToCoords(mousePos).x / 16) );
+		int y = (int (m_mainWindowPtr->mapPixelToCoords(mousePos).y / 16) );
 
-	mouseHighlight.setPosition(float(x), float(y));
+		x *= 16;
+		y *= 16;
+
+		mouseHighlight.setPosition(float(x), float(y));
+	}
+	else
+	{
+		int x = (int (m_mainWindowPtr->mapPixelToCoords(mousePos).x / 16) );
+		int y = (int ((m_mainWindowPtr->mapPixelToCoords(mousePos).y + 8) / 16) );
+
+		x = x * 16;
+		y = y * 16 - 8;
+
+		mouseHighlight.setPosition(float(x), float(y));
+	}
 }
 
-bool Foreground::CheckIfTileExists(int x, int y) const
+bool Foreground::CheckIfTileExists(const int x, const int y, const Mode mode) const
 {
-	for (const auto& block : foregroundBlocks)
+	for (const auto& block : ((mode == Mode::FOREGROUND)? foregroundBlocks : backgroundBlocks) )
 	{
 		if (block.x == x && block.y == y)
 			return true;
@@ -57,15 +72,22 @@ void Foreground::InitMouseHighlight()
 
 void Foreground::DrawTiles()
 {
+	for (auto& tile : backgroundBlocks)
+	{
+		m_spriteForDrawing.setPosition(float(tile.x * 16), float(tile.y * 16 - 8));
+		m_spriteForDrawing.setTexture(m_textures.GetTextureById(tile.blockType), true);
+		m_mainWindowPtr->draw(m_spriteForDrawing);
+	}
+
 	for (auto& tile : foregroundBlocks)
 	{
 		m_spriteForDrawing.setPosition(float(tile.x * 16), float(tile.y * 16));
-		m_spriteForDrawing.setTexture(m_textures.GetTextureById(tile.blockType));
+		m_spriteForDrawing.setTexture(m_textures.GetTextureById(tile.blockType), true);
 		m_mainWindowPtr->draw(m_spriteForDrawing);
 	}
 }
 
-std::vector<ForegroundBlock>& Foreground::GetTilesContainer()
+std::vector<Block>& Foreground::GetTilesContainer()
 {
 	return foregroundBlocks;
 }
@@ -80,16 +102,35 @@ Foreground::Foreground(sf::RenderWindow& mainWindow)
 void Foreground::DeleteTile()
 {
 	auto mousePos = sf::Mouse::getPosition(*m_mainWindowPtr);
-	int x = (int(m_mainWindowPtr->mapPixelToCoords(mousePos).x / 16));
-	int y = (int(m_mainWindowPtr->mapPixelToCoords(mousePos).y / 16));
 
-	for (auto it = foregroundBlocks.cbegin(); it != foregroundBlocks.cend(); ++it)
+	if (Layout::GetMode() == Mode::FOREGROUND)
 	{
-		if ((*it).x == x && (*it).y == y)
+		int x = (int(m_mainWindowPtr->mapPixelToCoords(mousePos).x / 16));
+		int y = (int(m_mainWindowPtr->mapPixelToCoords(mousePos).y / 16));
+
+		for (auto it = foregroundBlocks.cbegin(); it != foregroundBlocks.cend(); ++it)
 		{
-			foregroundBlocks.erase(it);
-			std::cout << "Erased. Current size: " << foregroundBlocks.size() << std::endl;
-			return;
+			if ((*it).x == x && (*it).y == y)
+			{
+				foregroundBlocks.erase(it);
+				std::cout << "Erased. Current size: " << foregroundBlocks.size() << std::endl;
+				return;
+			}
+		}
+	}
+	else
+	{
+		int x = (int(m_mainWindowPtr->mapPixelToCoords(mousePos).x / 16));
+		int y = (int((m_mainWindowPtr->mapPixelToCoords(mousePos).y + 8) / 16));
+
+		for (auto it = backgroundBlocks.cbegin(); it != backgroundBlocks.cend(); ++it)
+		{
+			if ((*it).x == x && (*it).y == y)
+			{
+				backgroundBlocks.erase(it);
+				std::cout << "Erased. Current size: " << backgroundBlocks.size() << std::endl;
+				return;
+			}
 		}
 	}
 }
@@ -97,26 +138,48 @@ void Foreground::DeleteTile()
 void Foreground::AddTile()
 {
 	auto mousePos = sf::Mouse::getPosition(*m_mainWindowPtr);
-	int x = (int(m_mainWindowPtr->mapPixelToCoords(mousePos).x / 16));
-	int y = (int(m_mainWindowPtr->mapPixelToCoords(mousePos).y / 16));
 
-	if (x >= 0 && y >= 0 && sf::Mouse::getPosition(*m_mainWindowPtr).x > 140 && x < 400 && y < 119)
+	if (Layout::GetMode() == Mode::FOREGROUND)
 	{
-		if (!CheckIfTileExists(x, y))
+		int x = (int(m_mainWindowPtr->mapPixelToCoords(mousePos).x / 16));
+		int y = (int(m_mainWindowPtr->mapPixelToCoords(mousePos).y / 16));
+
+		if (x >= 0 && y >= 0 && sf::Mouse::getPosition(*m_mainWindowPtr).x > 140 && x < 400 && y < 119)
 		{
-			ForegroundBlock tempBlock;
-			tempBlock.x = x;
-			tempBlock.y = y;
-			tempBlock.blockType = currentBlock;
-			foregroundBlocks.push_back(tempBlock);
-			std::cout << "Added. Current size: " << foregroundBlocks.size() << std::endl;
+			if (!CheckIfTileExists(x, y, Mode::FOREGROUND))
+			{
+				Block tempBlock;
+				tempBlock.x = x;
+				tempBlock.y = y;
+				tempBlock.blockType = currentBlock;
+				foregroundBlocks.push_back(tempBlock);
+				std::cout << "Added to foreground. Current size: " << foregroundBlocks.size() << std::endl;
+			}
+		}
+	}
+	else
+	{
+		int x = (int(m_mainWindowPtr->mapPixelToCoords(mousePos).x / 16));
+		int y = (int((m_mainWindowPtr->mapPixelToCoords(mousePos).y + 8) / 16));
+
+		if (x >= 0 && y >= 0 && sf::Mouse::getPosition(*m_mainWindowPtr).x > 140 && x < 400 && y < 119)
+		{
+			if (!CheckIfTileExists(x, y, Mode::BACKGROUND))
+			{
+				Block tempBlock;
+				tempBlock.x = x;
+				tempBlock.y = y;
+				tempBlock.blockType = currentBlock;
+				backgroundBlocks.push_back(tempBlock);
+				std::cout << "Added to background. Current size: " << backgroundBlocks.size() << std::endl;
+			}
 		}
 	}
 }
 
-ForegroundBlock Foreground::GetTileAtCoords(int x, int y)
+Block Foreground::GetTileAtCoords(const int x, const int y, const Mode mode)
 {
-	for (auto& it : foregroundBlocks)
+	for (auto& it : ((mode == Mode::FOREGROUND) ? foregroundBlocks : backgroundBlocks))
 	{
 		if (it.x == x && it.y == y)
 			return it;

@@ -1,38 +1,35 @@
 #pragma once
 
-// --- Base class: --- //
-#include "Interaface.h"
-
-// --- Other --- //
 #include "Resource_Managment/BlockTypes.h"
 #include "Resource_Managment/TextureManager.h"
+#include "Layout.h"
 #include <vector>
 #include <iostream>
 
 
 // A struct that represents a block in foreground; stored in static foregroundBlocks 
-struct ForegroundBlock
+struct Block
 {
 	int x;
 	int y;
 	BlockTypes blockType;
 };
 
-class Foreground : public Interface<ForegroundBlock>
+class Foreground
 {
 public:
 	Foreground(sf::RenderWindow& mainWindow);
-	virtual void DeleteTile() override;
-	virtual void AddTile() override;
-	virtual ForegroundBlock GetTileAtCoords(int x, int y) override;
-	static std::vector<ForegroundBlock>& GetTilesContainer();
+	virtual void DeleteTile();
+	virtual void AddTile();
+	virtual Block GetTileAtCoords(const int x, const int y, const Mode mode);
+	static std::vector<Block>& GetTilesContainer();
 	void Draw();
 	void Update();
 	static sf::RectangleShape& GetMouseHighlight();
 	static BlockTypes& GetCurrentBlock();
 private:
-	virtual void HighlightTile() override;
-	virtual bool CheckIfTileExists(int x, int y) const override;
+	virtual void HighlightTile();
+	virtual bool CheckIfTileExists(const int x, const int y, const Mode mode) const;
 	void InitMouseHighlight();
 	void DrawTiles();
 private:
@@ -45,8 +42,9 @@ private:
 	// Object used when assigning textures to each block
 	TextureManager m_textures;
 
-	// Static vector that holds every foreground entity
-	static std::vector<ForegroundBlock>foregroundBlocks;
+	// Static vectors that hold every foreground and background entity
+	static std::vector<Block>foregroundBlocks;
+	static std::vector<Block>backgroundBlocks;
 
 	// A "highlighter" used to show at which block the mouse is pointing currently
 	static sf::RectangleShape mouseHighlight;

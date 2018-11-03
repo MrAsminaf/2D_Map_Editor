@@ -42,6 +42,11 @@ void Layout::SetMode(const Mode mode)
 	m_currentMode = mode;
 }
 
+Mode Layout::GetMode()
+{
+	return m_currentMode;
+}
+
 void Layout::CreateForegroundNet()
 {
 	int index = 0;
@@ -140,8 +145,12 @@ void Layout::UpdateGradient(const sf::RenderWindow & mainWindow)
 	for (int i = 0; i < 800; ++i)
 	{
 		m_foregroundVerticalLines[i].color = m_netColor;
+		m_backgroundVerticalLines[i].color = m_netColor;
 		if (i <= 240)
+		{
 			m_foregroundHorizontalLines[i].color = m_netColor;
+			m_backgroundHorizontalLines[i].color = m_netColor;
+		}
 	}
 
 }

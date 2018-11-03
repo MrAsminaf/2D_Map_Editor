@@ -80,9 +80,6 @@
     <ClInclude Include="Src\Interface\Foreground.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Interface\Interaface.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Interface\Layout.h">
       <Filter>Header Files</Filter>
     </ClInclude>

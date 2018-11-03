@@ -47,9 +47,23 @@ void GUI::Update(sf::Color& bg_color)
 		ImGui::Spacing();
 		ImGui::Spacing();
 
+		if (texture.blockType == BlockTypes::ENUM_MIDGROUND_LEFT_A || texture.blockType == BlockTypes::ENUM_MIDGROUND_LEFT_A_SHADOWED
+			|| texture.blockType == BlockTypes::ENUM_MIDGROUND_RIGHT_A || texture.blockType == BlockTypes::ENUM_MIDGROUND_RIGHT_A_SHADOWED)
+		{
+			if (ImGui::ImageButton(texture.texture, sf::Vector2f(50, 25)))
+			{
+				Foreground::GetMouseHighlight().setTexture(&texture.texture, true);
+				Foreground::GetMouseHighlight().setSize(sf::Vector2f(32, 16));
+				Foreground::GetMouseHighlight().setFillColor(sf::Color(255, 255, 255, 100));
+				Foreground::GetCurrentBlock() = texture.blockType;
+			}
+			continue;
+		}
+
 		if (ImGui::ImageButton(texture.texture, sf::Vector2f(50, 50)))
 		{
-			Foreground::GetMouseHighlight().setTexture(&texture.texture);
+			Foreground::GetMouseHighlight().setTexture(&texture.texture, true);
+			Foreground::GetMouseHighlight().setSize(sf::Vector2f(16, 16));
 			Foreground::GetMouseHighlight().setFillColor(sf::Color(255, 255, 255, 100));
 			Foreground::GetCurrentBlock() = texture.blockType;
 		}

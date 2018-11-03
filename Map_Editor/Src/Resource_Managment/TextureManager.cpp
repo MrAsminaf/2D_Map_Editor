@@ -31,6 +31,18 @@ void TextureManager::LoadAllTexturesFromFiles()
 	LoadOneTexture("Res/terrain_center_right.png"		, BlockTypes::ENUM_TERRAIN_CENTER_RIGHT);
 
 	LoadOneTexture("Res/midground_left_B_shadowed.png"	, BlockTypes::ENUM_MIDGROUND_LEFT_B_SHADOWED);
+	LoadOneTexture("Res/midground_left_B.png"			, BlockTypes::ENUM_MIDGROUND_LEFT_B);
+
+	LoadOneTexture("Res/midground_right_B_shadowed.png"	, BlockTypes::ENUM_MIDGROUND_RIGHT_B_SHADOWED);
+	LoadOneTexture("Res/midground_right_B.png"			, BlockTypes::ENUM_MIDGROUND_RIGHT_B);
+
+	LoadOneTexture("Res/midground_center.png"			, BlockTypes::ENUM_MIDGROUND_CENTER);
+
+	LoadOneTexture("Res/midground_left_A.png"			, BlockTypes::ENUM_MIDGROUND_LEFT_A);
+	LoadOneTexture("Res/midground_left_A_shadowed.png"	, BlockTypes::ENUM_MIDGROUND_LEFT_A_SHADOWED);
+
+	LoadOneTexture("Res/midground_right_A.png"			, BlockTypes::ENUM_MIDGROUND_RIGHT_A);
+	LoadOneTexture("Res/midground_right_A_shadowed.png"	, BlockTypes::ENUM_MIDGROUND_RIGHT_A_SHADOWED);
 }
 
 void TextureManager::LoadOneTexture(const std::string& filepath_to_texture, const BlockTypes& block_type)

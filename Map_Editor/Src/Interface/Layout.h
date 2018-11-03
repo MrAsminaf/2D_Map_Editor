@@ -15,6 +15,7 @@ public:
 	void Draw(sf::RenderWindow&);
 	void Update(const sf::RenderWindow&);
 	static void SetMode(const Mode mode);
+	static Mode GetMode();
 private:
 	void CreateForegroundNet();
 	void CreateBackgroundNet();

@@ -1,6 +1,6 @@
 #include "MapLoader.h"
 
-void ExternalMapLoader::LoadMapFromFile(const std::string filename, std::vector<ForegroundBlock>& tilesVector)
+void ExternalMapLoader::LoadMapFromFile(const std::string filename, std::vector<Block>& tilesVector)
 {
 	std::cout << "LoadMapFromFile: " << filename << std::endl;
 	ClearVectorBeforeLoadingMap(tilesVector);
@@ -21,7 +21,7 @@ void ExternalMapLoader::LoadMapFromFile(const std::string filename, std::vector<
 		{
 			if (line[x] != ' ')
 			{
-				ForegroundBlock temp;
+				Block temp;
 				temp.x = x;
 				temp.y = y;
 				temp.blockType = BlockTypes(line[x]);

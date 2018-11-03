@@ -30,7 +30,7 @@ void MapFileGenerator::Generate()
 		for (int x = 0; x < 400; ++x)
 		{
 			if (CheckIfAnyTilePositionMatchesGivenCoords(x, y))
-				outputLine += char(GetTileAtGivenCoords<ForegroundBlock>(x, y).blockType);
+				outputLine += char(GetTileAtGivenCoords<Block>(x, y).blockType);
 			else
 				outputLine.append(" ");
 		}
