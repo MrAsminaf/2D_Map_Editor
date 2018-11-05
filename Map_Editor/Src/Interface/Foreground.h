@@ -19,17 +19,17 @@ class Foreground
 {
 public:
 	Foreground(sf::RenderWindow& mainWindow);
-	virtual void DeleteTile();
-	virtual void AddTile();
-	virtual Block GetTileAtCoords(const int x, const int y, const Mode mode);
-	static std::vector<Block>& GetTilesContainer();
+	void DeleteTile();
+	void AddTile();
 	void Draw();
 	void Update();
 	static sf::RectangleShape& GetMouseHighlight();
 	static BlockTypes& GetCurrentBlock();
+	static bool CheckIfTileExists(const int x, const int y, const Mode mode);
+	static std::vector<Block>& GetTilesContainer();
+	static Block GetTileAtCoords(const int x, const int y, const Mode mode);
 private:
 	virtual void HighlightTile();
-	virtual bool CheckIfTileExists(const int x, const int y, const Mode mode) const;
 	void InitMouseHighlight();
 	void DrawTiles();
 private:

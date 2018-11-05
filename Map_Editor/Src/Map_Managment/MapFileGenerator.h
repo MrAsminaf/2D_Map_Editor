@@ -11,12 +11,6 @@ class MapFileGenerator
 public:
 	MapFileGenerator();
 	void Generate();
-
-private:
-	bool CheckIfAnyTilePositionMatchesGivenCoords(int, int)const;
-
-	template<typename T>
-	T GetTileAtGivenCoords(int x, int y)const;
 private:
 	std::string m_fileName;
 };

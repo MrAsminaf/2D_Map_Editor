@@ -2,7 +2,7 @@
 
 MapFileGenerator::MapFileGenerator()
 	:
-	m_fileName("Maps/platformer.txt")
+	m_fileName("Maps/")
 {
 }
 
@@ -16,46 +16,40 @@ void MapFileGenerator::Generate()
 	cout << "Invoked Generate method" << endl; // debug info
 	cout << Foreground::GetTilesContainer().size() << endl; //debug info
 
-	ofstream outputFile;
-	outputFile.open(m_fileName);
+	ofstream foregroundOutputFile;
+	ofstream backgroundOutputFile;
 
-	if (!outputFile.is_open())
-		cerr << "Could not open " << m_fileName << " file to generate map" << endl;
+	foregroundOutputFile.open(m_fileName + "foreground_platformer.txt");
+	backgroundOutputFile.open(m_fileName + "background_platformer.txt");
 
-	std::string outputLine;
-	constexpr int BLOCK_ID = 2;
+	if (!foregroundOutputFile.is_open())
+		cerr << "Could not open foreground_" << m_fileName << " file to generate map" << endl;
+	if (!backgroundOutputFile.is_open())
+		cerr << "Could not open background_" << m_fileName << " file to generate map" << endl;
+
+	std::string foregroundOutputLine;
+	std::string backgroundOutputLine;
 	for (int y = 0; y < 120; ++y)
 	{
-		outputLine.clear();
+		foregroundOutputLine.clear();
+		backgroundOutputLine.clear();
 		for (int x = 0; x < 400; ++x)
 		{
-			if (CheckIfAnyTilePositionMatchesGivenCoords(x, y))
-				outputLine += char(GetTileAtGivenCoords<Block>(x, y).blockType);
+			if (Foreground::CheckIfTileExists(x, y, Mode::FOREGROUND))
+				foregroundOutputLine += char(Foreground::GetTileAtCoords(x, y, Mode::FOREGROUND).blockType);
 			else
-				outputLine.append(" ");
+				foregroundOutputLine.append(" ");
+
+			if (Foreground::CheckIfTileExists(x, y, Mode::BACKGROUND))
+				backgroundOutputLine += char(Foreground::GetTileAtCoords(x, y, Mode::BACKGROUND).blockType);
+			else
+				backgroundOutputLine.append(" ");
 		}
-		outputFile << outputLine << endl;
+		foregroundOutputFile << foregroundOutputLine << endl;
+		backgroundOutputFile << backgroundOutputLine << endl;
 	}
-	outputFile.close();
-	cout << "Done generating text file" << endl;
-}
+	foregroundOutputFile.close();
+	backgroundOutputFile.close();
 
-bool MapFileGenerator::CheckIfAnyTilePositionMatchesGivenCoords(int x, int y) const
-{
-	for (auto &it : Foreground::GetTilesContainer())
-	{
-		if (it.x == x && it.y == y)
-			return true;
-	}
-	return false;
-}
-
-template<typename T>
-T MapFileGenerator::GetTileAtGivenCoords(int x, int y) const
-{
-	for (auto &it : Foreground::GetTilesContainer())
-	{
-		if (it.x == x && it.y == y)
-			return it;
-	}
+	cout << "Done generating text files" << endl;
 }

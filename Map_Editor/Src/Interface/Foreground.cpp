@@ -54,7 +54,7 @@ void Foreground::HighlightTile()
 	}
 }
 
-bool Foreground::CheckIfTileExists(const int x, const int y, const Mode mode) const
+bool Foreground::CheckIfTileExists(const int x, const int y, const Mode mode)
 {
 	for (const auto& block : ((mode == Mode::FOREGROUND)? foregroundBlocks : backgroundBlocks) )
 	{
