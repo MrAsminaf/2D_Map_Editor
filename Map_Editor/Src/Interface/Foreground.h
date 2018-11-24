@@ -26,7 +26,7 @@ public:
 	static sf::RectangleShape& GetMouseHighlight();
 	static BlockTypes& GetCurrentBlock();
 	static bool CheckIfTileExists(const int x, const int y, const Mode mode);
-	static std::vector<Block>& GetTilesContainer();
+	static std::vector<Block>& GetTilesContainer(const Mode m);
 	static Block GetTileAtCoords(const int x, const int y, const Mode mode);
 private:
 	virtual void HighlightTile();

@@ -70,12 +70,17 @@ void GUI::Update(sf::Color& bg_color)
 	}
 	ImGui::End();
 
-	ImGui::Begin("Load other file");
-	char buf[256] = "";
+	ImGui::Begin("Load files");
+	char buf1[256] = "";
+	char buf2[256] = "";
 	ImGui::Text("Write name of the file and click 'Enter'");
-	if (ImGui::InputText("Name", buf, 256, 32))
+	if (ImGui::InputText("Foreground", buf1, 256, 32))
 	{
-		m_mapFromFileLoader.LoadMapFromFile(buf, Foreground::GetTilesContainer());
+		m_mapFromFileLoader.LoadFile(buf1, Foreground::GetTilesContainer(Mode::FOREGROUND));
+	}
+	if(ImGui::InputText("Background", buf2, 256, 32))
+	{
+		m_mapFromFileLoader.LoadFile(buf2, Foreground::GetTilesContainer(Mode::BACKGROUND));
 	}
 	ImGui::End();
 }

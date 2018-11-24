@@ -87,9 +87,9 @@ void Foreground::DrawTiles()
 	}
 }
 
-std::vector<Block>& Foreground::GetTilesContainer()
+std::vector<Block>& Foreground::GetTilesContainer(const Mode mode)
 {
-	return foregroundBlocks;
+	return (mode == Mode::FOREGROUND ? foregroundBlocks : backgroundBlocks);
 }
 
 Foreground::Foreground(sf::RenderWindow& mainWindow)

@@ -1,6 +1,6 @@
 #include "MapLoader.h"
 
-void ExternalMapLoader::LoadMapFromFile(const std::string filename, std::vector<Block>& tilesVector)
+void ExternalMapLoader::LoadFile(const std::string filename, std::vector<Block>& tilesVector)
 {
 	std::cout << "LoadMapFromFile: " << filename << std::endl;
 	ClearVectorBeforeLoadingMap(tilesVector);

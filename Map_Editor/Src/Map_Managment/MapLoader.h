@@ -9,7 +9,7 @@
 class ExternalMapLoader
 {
 public:
-	void LoadMapFromFile(const std::string filename, std::vector<Block>& tilesVector);
+	void LoadFile(const std::string filename, std::vector<Block>& tilesVector);
 private:
 	template<typename T>
 	void ClearVectorBeforeLoadingMap(std::vector<T>& tilesVector);

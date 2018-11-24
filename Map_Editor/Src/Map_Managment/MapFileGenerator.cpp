@@ -13,8 +13,11 @@ void MapFileGenerator::Generate()
 	using std::cerr;
 	using std::ofstream;
 
-	cout << "Invoked Generate method" << endl; // debug info
-	cout << Foreground::GetTilesContainer().size() << endl; //debug info
+	// --- Debug info --- //
+	cout << "Invoked Generate method" << endl;
+	cout << "Foreground: "  << Foreground::GetTilesContainer(Mode::FOREGROUND).size() << endl;
+	cout << "Background: " << Foreground::GetTilesContainer(Mode::BACKGROUND).size() << endl;
+	// --- //
 
 	ofstream foregroundOutputFile;
 	ofstream backgroundOutputFile;
